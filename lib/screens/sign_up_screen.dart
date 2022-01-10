@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sn/providers/sign_up.dart';
 
-class InitialScreen extends StatelessWidget {
-  const InitialScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,18 +10,17 @@ class InitialScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              const Text('Ciao!'),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/sign_up');
+                  signUp(context);
                 },
-                child: const Text('Registrati'),
+                child: const Text('Entra con Google'),
               ),
-              const Text('oppure'),
               TextButton(
                 onPressed: () {},
-                child: const Text('Accedi'),
+                child: const Text('Accedi con Apple'),
               ),
             ],
           ),
