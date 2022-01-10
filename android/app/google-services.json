@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1063733383461",
+    "firebase_url": "https://sn-prealpha-default-rtdb.firebaseio.com",
+    "project_id": "sn-prealpha",
+    "storage_bucket": "sn-prealpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063733383461:android:d6512df81ba2de3d080acc",
+        "android_client_info": {
+          "package_name": "it.produzionisiliconesi.sn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1063733383461-ulp5kgnf9eg37ktj28tcsj5erd8sberj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.produzionisiliconesi.sn",
+            "certificate_hash": "7ab3f52f8101a011e64fbc228c1e13726a29001c"
+          }
+        },
+        {
+          "client_id": "1063733383461-dbpijgc99brid62be9j3bsvbl1e2d5bu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGyP-VPZOvEVDkpe_qoLU2cQAHmJM6-fk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1063733383461-dbpijgc99brid62be9j3bsvbl1e2d5bu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1063733383461-4qb4j6bnv14qlscrqlmvt8b3a9gk4l2f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "it.produzionisiliconesi.sn"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
