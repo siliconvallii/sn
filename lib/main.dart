@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sn/screens/home_screen.dart';
 import 'package:sn/screens/initial_screen.dart';
 import 'package:sn/screens/sign_up_screen.dart';
 
@@ -17,6 +18,7 @@ class SN extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/initial',
       routes: {
+        '/home': (BuildContext context) => const HomeScreen(),
         '/initial': (BuildContext context) => const InitialScreen(),
         '/sign_up': (BuildContext context) => const SignUpScreen(),
       },

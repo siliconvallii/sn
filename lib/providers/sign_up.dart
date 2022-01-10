@@ -44,7 +44,7 @@ void signUp(BuildContext context) async {
     await ref.child('users').child(auth.user!.uid).set(user);
 
     // navigate to HomeScreen
-    Navigator.pushNamed(context, '/home_screen');
+    Navigator.pushNamed(context, '/home');
   } else {
     // email domain is not allowed
     showDialog(
