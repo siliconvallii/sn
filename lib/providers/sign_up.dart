@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -30,21 +29,24 @@ void signUp(BuildContext context) async {
     UserCredential auth =
         await FirebaseAuth.instance.signInWithCredential(credential);
 
-    // instatiate reference of Realtime Database
-    final DatabaseReference ref = FirebaseDatabase.instance.ref();
+    // check if user is new
+    if (auth.additionalUserInfo!.isNewUser) {
+      // user is new
 
-    // create user map
-    user = {
-      'username': emailStrings[0],
-      'profile_pic': auth.user!.photoURL,
-      'uid': auth.user!.uid,
-    };
+      // create user map
+      user = {
+        'username': emailStrings[0],
+        'uid': auth.user!.uid,
+      };
 
-    // create or update user in Realtime Database
-    await ref.child('users').child(auth.user!.uid).set(user);
+      // navigate to SignUpScreen
+      Navigator.pushNamed(context, '/sign_up');
+    } else {
+      // user isn't new
 
-    // navigate to HomeScreen
-    Navigator.pushNamed(context, '/home');
+      // navigate to HomeScreen
+      Navigator.pushNamed(context, '/home');
+    }
   } else {
     // email domain is not allowed
     showDialog(
