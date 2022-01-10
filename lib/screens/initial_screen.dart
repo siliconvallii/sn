@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sn/providers/sign_up.dart';
 
 class InitialScreen extends StatelessWidget {
   const InitialScreen({Key? key}) : super(key: key);
@@ -13,14 +14,14 @@ class InitialScreen extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/sign_up');
+                  signUp(context);
                 },
-                child: const Text('Registrati'),
+                child: const Text('Entra con Google'),
               ),
               const Text('oppure'),
               TextButton(
                 onPressed: () {},
-                child: const Text('Accedi'),
+                child: const Text('Accedi con Apple'),
               ),
             ],
           ),

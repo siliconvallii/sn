@@ -51,9 +51,12 @@ void signUp(BuildContext context) async {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Email not allowed'),
+          title: const Text('Errore!'),
           content: const Text(
-            'The email you provided is not allowed to sign-in.',
+            'L\'account che hai utilizzato per accedere non è autorizzato.\n'
+            'Assicurati di utilizzare un\'account collegato alla tua email '
+            'istituzionale che termina con "@studenti.liceosarpi.bg.it". '
+            'Se non ne hai una, per ora non puoi accedere a SN.\nScusa!',
           ),
           actions: <TextButton>[
             TextButton(
