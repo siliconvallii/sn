@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sn/pages/chatlist_page.dart';
+import 'package:sn/pages/inbox_page.dart';
 import 'package:sn/pages/own_profile_page.dart';
 import 'package:sn/pages/send_image_page.dart';
 
@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('SN'),
       ),
       body: _index == 0
-          ? const ChatlistPage()
+          ? const InboxPage()
           : _index == 1
               ? const SendImagePage()
               : const OwnProfilePage(),
