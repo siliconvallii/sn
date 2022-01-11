@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -43,6 +44,20 @@ void signUp(BuildContext context) async {
       Navigator.pushNamed(context, '/sign_up');
     } else {
       // user isn't new
+
+      // instatiate reference of Realtime Database
+      final DatabaseReference ref = FirebaseDatabase.instance.ref();
+
+      // fetch user map
+      ref.child('users').child(auth.user!.uid).get().then((snapshot) {
+        user['uid'] = snapshot.child('uid').value;
+        user['bio'] = snapshot.child('bio').value;
+        user['profile_picture'] = snapshot.child('profile_picture').value;
+        user['class'] = snapshot.child('class').value;
+        user['section'] = snapshot.child('section').value;
+        user['username'] = snapshot.child('username').value;
+        print(user);
+      });
 
       // navigate to HomeScreen
       Navigator.pushNamed(context, '/home');
