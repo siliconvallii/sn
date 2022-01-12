@@ -26,7 +26,25 @@ class InboxPage extends StatelessWidget {
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, int index) {
-              if (snapshot.data[index]['viewed']) {
+              if (snapshot.data[index]['replied_at'] != null) {
+                return Row(
+                  children: [
+                    Image.network(
+                      snapshot.data![index]['sender']['profile_picture'],
+                      scale: 10,
+                    ),
+                    Column(
+                      children: [
+                        Text(snapshot.data![index]['sender']['username']),
+                        Text(
+                          'Hai risposto ' + snapshot.data![index]['replied_at'],
+                        ),
+                      ],
+                    ),
+                    const Icon(Icons.arrow_upward),
+                  ],
+                );
+              } else if (snapshot.data[index]['viewed']) {
                 return InkWell(
                   child: Row(
                     children: [
@@ -46,12 +64,12 @@ class InboxPage extends StatelessWidget {
                   onTap: () async {
                     String imageUrl = await takeImage();
                     sendImage(imageUrl, snapshot.data![index]['sender']['uid']);
-                    ref
+                    await ref
                         .child('inboxes')
                         .child(user['uid'])
                         .child(snapshot.data![index]['sender']['uid'])
-                        .child('replied')
-                        .set(true);
+                        .child('replied_at')
+                        .set(DateTime.now().toUtc().toString());
                   },
                 );
               } else {
@@ -71,7 +89,7 @@ class InboxPage extends StatelessWidget {
                       const Icon(Icons.arrow_downward),
                     ],
                   ),
-                  onTap: () {
+                  onTap: () async {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -80,7 +98,7 @@ class InboxPage extends StatelessWidget {
                         ),
                       ),
                     );
-                    ref
+                    await ref
                         .child('inboxes')
                         .child(user['uid'])
                         .child(snapshot.data![index]['sender']['uid'])
