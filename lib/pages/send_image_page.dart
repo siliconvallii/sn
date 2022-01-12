@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sn/providers/send_to_random.dart';
+import 'package:sn/providers/send_image.dart';
 import 'package:sn/utils/take_image.dart';
 
 class SendImagePage extends StatelessWidget {
@@ -13,7 +13,7 @@ class SendImagePage extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               String imageUrl = await takeImage();
-              sendToRandom(imageUrl);
+              sendImage(imageUrl, 'random');
             },
             child: const Text('Send to random'),
           ),
