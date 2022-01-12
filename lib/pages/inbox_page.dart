@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sn/providers/fetch_inbox.dart';
 import 'package:sn/providers/send_image.dart';
 import 'package:sn/providers/sign_in.dart';
+import 'package:sn/screens/other_profile_screen.dart';
 import 'package:sn/screens/watch_image_screen.dart';
 import 'package:sn/utils/take_image.dart';
 
@@ -43,10 +44,22 @@ class _InboxPageState extends State<InboxPage> {
                         if (snapshot.data[index]['replied_at'] != null) {
                           return Row(
                             children: [
-                              Image.network(
-                                snapshot.data![index]['sender']
-                                    ['profile_picture'],
-                                scale: 10,
+                              InkWell(
+                                child: Image.network(
+                                  snapshot.data![index]['sender']
+                                      ['profile_picture'],
+                                  scale: 10,
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => OtherProfileScreen(
+                                        user: snapshot.data![index]['sender'],
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                               Column(
                                 children: [
@@ -66,15 +79,27 @@ class _InboxPageState extends State<InboxPage> {
                             ],
                           );
                         } else if (snapshot.data[index]['viewed']) {
-                          return InkWell(
-                            child: Row(
-                              children: [
-                                Image.network(
+                          return Row(
+                            children: [
+                              InkWell(
+                                child: Image.network(
                                   snapshot.data![index]['sender']
                                       ['profile_picture'],
                                   scale: 10,
                                 ),
-                                Column(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => OtherProfileScreen(
+                                        user: snapshot.data![index]['sender'],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              InkWell(
+                                child: Column(
                                   children: [
                                     Text(snapshot.data![index]['sender']
                                         ['username']),
@@ -89,32 +114,45 @@ class _InboxPageState extends State<InboxPage> {
                                         ' ore'),
                                   ],
                                 ),
-                                const Icon(Icons.arrow_upward),
-                              ],
-                            ),
-                            onTap: () async {
-                              String imageUrl = await takeImage();
-                              sendImage(imageUrl,
-                                  snapshot.data![index]['sender']['uid']);
-                              await ref
-                                  .child('inboxes')
-                                  .child(user['uid'])
-                                  .child(snapshot.data![index]['sender']['uid'])
-                                  .child('replied_at')
-                                  .set(DateTime.now().toUtc().toString())
-                                  .then((value) => setState(() {}));
-                            },
+                                onTap: () async {
+                                  String imageUrl = await takeImage();
+                                  sendImage(imageUrl,
+                                      snapshot.data![index]['sender']['uid']);
+                                  await ref
+                                      .child('inboxes')
+                                      .child(user['uid'])
+                                      .child(snapshot.data![index]['sender']
+                                          ['uid'])
+                                      .child('replied_at')
+                                      .set(DateTime.now().toUtc().toString())
+                                      .then((value) => setState(() {}));
+                                },
+                              ),
+                              const Icon(Icons.arrow_upward),
+                            ],
                           );
                         } else {
-                          return InkWell(
-                            child: Row(
-                              children: [
-                                Image.network(
+                          return Row(
+                            children: [
+                              InkWell(
+                                child: Image.network(
                                   snapshot.data![index]['sender']
                                       ['profile_picture'],
                                   scale: 10,
                                 ),
-                                Column(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => OtherProfileScreen(
+                                        user: snapshot.data![index]['sender'],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              InkWell(
+                                child: Column(
                                   children: [
                                     Text(snapshot.data![index]['sender']
                                         ['username']),
@@ -130,25 +168,27 @@ class _InboxPageState extends State<InboxPage> {
                                     )
                                   ],
                                 ),
-                                const Icon(Icons.arrow_downward),
-                              ],
-                            ),
-                            onTap: () async {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WatchImageScreen(
-                                    imageUrl: snapshot.data![index]['image'],
-                                  ),
-                                ),
-                              ).then((value) => setState(() {}));
-                              await ref
-                                  .child('inboxes')
-                                  .child(user['uid'])
-                                  .child(snapshot.data![index]['sender']['uid'])
-                                  .child('viewed')
-                                  .set(true);
-                            },
+                                onTap: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => WatchImageScreen(
+                                        imageUrl: snapshot.data![index]
+                                            ['image'],
+                                      ),
+                                    ),
+                                  ).then((value) => setState(() {}));
+                                  await ref
+                                      .child('inboxes')
+                                      .child(user['uid'])
+                                      .child(snapshot.data![index]['sender']
+                                          ['uid'])
+                                      .child('viewed')
+                                      .set(true);
+                                },
+                              ),
+                              const Icon(Icons.arrow_downward),
+                            ],
                           );
                         }
                       },
