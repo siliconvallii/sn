@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:sn/providers/sign_in.dart';
 
-var users;
+dynamic users;
 
 Future<Map> getRandomUser() async {
   // instatiate reference of Realtime Database
