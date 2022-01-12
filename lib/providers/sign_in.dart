@@ -49,7 +49,7 @@ void signIn(BuildContext context) async {
       final DatabaseReference ref = FirebaseDatabase.instance.ref();
 
       // fetch user map
-      ref.child('users').child(auth.user!.uid).get().then((snapshot) {
+      await ref.child('users').child(auth.user!.uid).get().then((snapshot) {
         user['uid'] = snapshot.child('uid').value;
         user['bio'] = snapshot.child('bio').value;
         user['profile_picture'] = snapshot.child('profile_picture').value;
