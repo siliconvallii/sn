@@ -9,12 +9,7 @@ Future<List> fetchInbox() async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   // create or update user in Realtime Database
-  await ref
-      .child('users')
-      .child(user['uid'])
-      .child('inbox')
-      .get()
-      .then((value) {
+  await ref.child('inboxes').child(user['uid']).get().then((value) {
     inbox = value.value;
   });
 

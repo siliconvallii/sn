@@ -28,17 +28,12 @@ void sendImage(String imageUrl, String recipient) async {
   if (recipient == 'random') {
     // get randomUser
     Map randomUser = await getRandomUser();
-    while (randomUser == user['uid']) {
+    while (randomUser['uid'] == user['uid']) {
       randomUser = await getRandomUser();
     }
 
     // put image in randomUser's inbox
-    ref
-        .child('users')
-        .child(randomUser['uid'])
-        .child('inbox')
-        .child(user['uid'])
-        .set(
+    ref.child('inboxes').child(randomUser['uid']).child(user['uid']).set(
       {
         'image': imageUrl,
         'date': DateTime.now().toUtc().toString(),
@@ -48,7 +43,7 @@ void sendImage(String imageUrl, String recipient) async {
     );
   } else {
     // put image in recipient's inbox
-    ref.child('users').child(recipient).child('inbox').child(user['uid']).set(
+    ref.child('inboxes').child(recipient).child(user['uid']).set(
       {
         'image': imageUrl,
         'date': DateTime.now().toUtc().toString(),

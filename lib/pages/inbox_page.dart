@@ -75,9 +75,8 @@ class InboxPage extends StatelessWidget {
                       ),
                     );
                     ref
-                        .child('users')
+                        .child('inboxes')
                         .child(user['uid'])
-                        .child('inbox')
                         .child(snapshot.data![index]['sender']['uid'])
                         .child('viewed')
                         .set(true);
