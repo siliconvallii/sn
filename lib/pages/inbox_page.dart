@@ -45,7 +45,13 @@ class InboxPage extends StatelessWidget {
                   ),
                   onTap: () async {
                     String imageUrl = await takeImage();
-                    sendImage(imageUrl, snapshot.data!['sender']['uid']);
+                    sendImage(imageUrl, snapshot.data![index]['sender']['uid']);
+                    ref
+                        .child('inboxes')
+                        .child(user['uid'])
+                        .child(snapshot.data![index]['sender']['uid'])
+                        .child('replied')
+                        .set(true);
                   },
                 );
               } else {
