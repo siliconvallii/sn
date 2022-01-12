@@ -39,7 +39,6 @@ void sendImage(String imageUrl, String recipient) async {
         'date': DateTime.now().toUtc().toString(),
         'sender': user,
         'viewed': false,
-        'replied': false,
       },
     );
   } else {
