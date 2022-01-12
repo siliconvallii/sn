@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 Map user = {};
 
-void signUp(BuildContext context) async {
+void signIn(BuildContext context) async {
   // fetch Google user
   GoogleSignInAccount? googleSignInAccount = await GoogleSignIn().signIn();
 
@@ -14,7 +14,7 @@ void signUp(BuildContext context) async {
   String emailDomain = emailStrings[1];
 
   // check if email domain is allowed
-  if (emailDomain == 'studenti.liceosarpi.bg.it') {
+  if (emailDomain != null) {
     // email domain is allowed
 
     // fetch credential from Google User

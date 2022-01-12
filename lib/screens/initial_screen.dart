@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sn/providers/sign_up.dart';
+import 'package:sn/providers/sign_in.dart';
 
 class InitialScreen extends StatelessWidget {
   const InitialScreen({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class InitialScreen extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  signUp(context);
+                  signIn(context);
                 },
                 child: const Text('Entra con Google'),
               ),

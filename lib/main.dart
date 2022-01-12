@@ -20,7 +20,7 @@ class SN extends StatelessWidget {
       routes: {
         '/home': (BuildContext context) => const HomeScreen(),
         '/initial': (BuildContext context) => const InitialScreen(),
-        '/sign_up': (BuildContext context) => const SignUpScreen(),
+        '/sign_in': (BuildContext context) => const SignUpScreen(),
       },
     );
   }

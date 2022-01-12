@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sn/providers/sign_up.dart';
+import 'package:sn/providers/sign_in.dart';
 
 class OwnProfilePage extends StatelessWidget {
   const OwnProfilePage({Key? key}) : super(key: key);

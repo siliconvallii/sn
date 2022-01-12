@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:sn/providers/fetch_inbox.dart';
 import 'package:sn/providers/send_image.dart';
-import 'package:sn/providers/sign_up.dart';
+import 'package:sn/providers/sign_in.dart';
 import 'package:sn/screens/watch_image_screen.dart';
 import 'package:sn/utils/take_image.dart';
 
