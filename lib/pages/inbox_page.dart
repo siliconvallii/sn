@@ -29,7 +29,9 @@ class _InboxPageState extends State<InboxPage> {
           },
           child: (snapshot.connectionState == ConnectionState.waiting)
               ? ListView(
-                  children: const [CircularProgressIndicator()],
+                  children: const [
+                    CircularProgressIndicator(),
+                  ],
                 )
               : (snapshot.hasError)
                   ? ListView(
@@ -52,11 +54,15 @@ class _InboxPageState extends State<InboxPage> {
                                       ['username']),
                                   Text(
                                     'Hai risposto ' +
-                                        snapshot.data![index]['replied_at'],
+                                        DateTime.now()
+                                            .difference(DateTime.parse(snapshot
+                                                .data![index]['replied_at']))
+                                            .inHours
+                                            .toString() +
+                                        ' ore fa',
                                   ),
                                 ],
                               ),
-                              const Icon(Icons.arrow_upward),
                             ],
                           );
                         } else if (snapshot.data[index]['viewed']) {
@@ -72,7 +78,15 @@ class _InboxPageState extends State<InboxPage> {
                                   children: [
                                     Text(snapshot.data![index]['sender']
                                         ['username']),
-                                    Text(snapshot.data![index]['date']),
+                                    Text('Rispondi entro ' +
+                                        (24 -
+                                                DateTime.now()
+                                                    .difference(DateTime.parse(
+                                                        snapshot.data![index]
+                                                            ['date']))
+                                                    .inHours)
+                                            .toString() +
+                                        ' ore'),
                                   ],
                                 ),
                                 const Icon(Icons.arrow_upward),
@@ -87,7 +101,8 @@ class _InboxPageState extends State<InboxPage> {
                                   .child(user['uid'])
                                   .child(snapshot.data![index]['sender']['uid'])
                                   .child('replied_at')
-                                  .set(DateTime.now().toUtc().toString());
+                                  .set(DateTime.now().toUtc().toString())
+                                  .then((value) => setState(() {}));
                             },
                           );
                         } else {
@@ -103,7 +118,16 @@ class _InboxPageState extends State<InboxPage> {
                                   children: [
                                     Text(snapshot.data![index]['sender']
                                         ['username']),
-                                    Text(snapshot.data![index]['date']),
+                                    Text(
+                                      'Inviata ' +
+                                          DateTime.now()
+                                              .difference(DateTime.parse(
+                                                  snapshot.data![index]
+                                                      ['date']))
+                                              .inHours
+                                              .toString() +
+                                          ' ore fa',
+                                    )
                                   ],
                                 ),
                                 const Icon(Icons.arrow_downward),
@@ -117,7 +141,7 @@ class _InboxPageState extends State<InboxPage> {
                                     imageUrl: snapshot.data![index]['image'],
                                   ),
                                 ),
-                              );
+                              ).then((value) => setState(() {}));
                               await ref
                                   .child('inboxes')
                                   .child(user['uid'])
