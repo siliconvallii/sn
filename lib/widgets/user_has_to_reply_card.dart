@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sn/providers/fetch_user_data.dart';
+import 'package:sn/screens/chat_screen.dart';
 
 class UserHasToReplyCard extends StatelessWidget {
   final Map chatData;
@@ -14,29 +15,43 @@ class UserHasToReplyCard extends StatelessWidget {
         return (snapshot.connectionState == ConnectionState.waiting)
             // snapshot is waiting
             ? const Center(child: CircularProgressIndicator())
-            : Row(
-                children: [
-                  SizedBox(
-                    child: Image.network(
-                      snapshot.data['profile_picture'],
-                    ),
-                    height: 50,
-                  ),
-                  Column(
-                    children: [
-                      Text(snapshot.data['username']),
-                      Text(
-                        'Ti ha scritto ' +
-                            DateTime.now()
-                                .difference(DateTime.parse(chatData['sent_at']))
-                                .inHours
-                                .toString() +
-                            ' ore fa',
+            : InkWell(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      child: Image.network(
+                        snapshot.data['profile_picture'],
                       ),
-                    ],
-                  ),
-                  const Icon(Icons.arrow_upward),
-                ],
+                      height: 50,
+                    ),
+                    Column(
+                      children: [
+                        Text(snapshot.data['username']),
+                        Text(
+                          'Ti ha scritto ' +
+                              DateTime.now()
+                                  .difference(
+                                      DateTime.parse(chatData['sent_at']))
+                                  .inHours
+                                  .toString() +
+                              ' ore fa',
+                        ),
+                      ],
+                    ),
+                    const Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => ChatScreen(
+                        chatData: chatData,
+                        senderData: snapshot.data,
+                      ),
+                    ),
+                  );
+                },
               );
       },
     );
