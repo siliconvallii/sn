@@ -11,25 +11,28 @@ class UserHasToReplyCard extends StatelessWidget {
     return FutureBuilder(
       future: fetchUserData(chatData['sender']),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return Row(
-          children: [
-            Image.network(snapshot.data['profile_picture']),
-            Column(
-              children: [
-                Text(snapshot.data['username']),
-                Text(
-                  'Hai risposto ' +
-                      DateTime.now()
-                          .difference(DateTime.parse(chatData['sent_at']))
-                          .inHours
-                          .toString() +
-                      ' ore fa',
-                ),
-              ],
-            ),
-            const Icon(Icons.arrow_upward),
-          ],
-        );
+        return (snapshot.connectionState == ConnectionState.waiting)
+            // snapshot is waiting
+            ? const Center(child: CircularProgressIndicator())
+            : Row(
+                children: [
+                  Image.network(snapshot.data['profile_picture']),
+                  Column(
+                    children: [
+                      Text(snapshot.data['username']),
+                      Text(
+                        'Hai risposto ' +
+                            DateTime.now()
+                                .difference(DateTime.parse(chatData['sent_at']))
+                                .inHours
+                                .toString() +
+                            ' ore fa',
+                      ),
+                    ],
+                  ),
+                  const Icon(Icons.arrow_upward),
+                ],
+              );
       },
     );
   }

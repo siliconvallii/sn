@@ -75,9 +75,12 @@ class _NewChatScreenState extends State<NewChatScreen> {
                   // find user with username
                   Map recipientData = {};
 
-                  await ref.child('users').get().then((DataSnapshot snapshot) {
+                  await ref
+                      .child('users')
+                      .get()
+                      .then((DataSnapshot snapshot) async {
                     dynamic allUsers = snapshot.value;
-                    allUsers.forEach((key, value) {
+                    await allUsers.forEach((key, value) {
                       if (value['username'] == _recipientController.text) {
                         recipientData = value;
                       }
@@ -133,11 +136,11 @@ class _NewChatScreenState extends State<NewChatScreen> {
                     String chatKey = user['uid'] + recipientData['uid'];
 
                     // check if chat already exists
-                    await ref.child('chats').get().then((snapshot) {
+                    await ref.child('chats').get().then((snapshot) async {
                       // fetch all chats
                       dynamic _allChatsMap = snapshot.value;
 
-                      _allChatsMap.forEach((key, value) {
+                      await _allChatsMap.forEach((key, value) {
                         // check if users are involved in each chat
                         if (key.contains(user['uid']) &&
                             key.contains(recipientData['uid'])) {
@@ -157,7 +160,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                       'text': _textController.text,
                       'sender': user['uid'],
                       'sent_at': DateTime.now().toString(),
-                      'recipient': _recipientController.text,
+                      'recipient': recipientData['uid'],
                     };
 
                     // upload message to chat

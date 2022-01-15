@@ -28,11 +28,13 @@ class HomeScreen extends StatelessWidget {
                       const StartChatButton(),
                       (snapshot.hasError)
                           // snapshot has error
-                          ? const Text('Non hai messaggi.')
+                          ? Text(snapshot.error.toString())
                           // snapshot has data
                           : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data.length,
                               itemBuilder: (BuildContext context, int index) {
-                                if (snapshot.data!['index']['sender'] ==
+                                if (snapshot.data![index]['sender'] ==
                                     user['uid']) {
                                   // user replied last
                                   return UserRepliedCard(

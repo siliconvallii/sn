@@ -4,11 +4,11 @@ Future<Map> fetchUserData(String userUid) async {
   // instatiate reference of Realtime Database
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
 
-  Map userData = {};
+  dynamic userData;
 
   // fetch recipient data
-  await ref.child('users').child(userUid).get().then((dynamic snapshot) {
-    userData = snapshot;
+  await ref.child('users').child(userUid).get().then((snapshot) {
+    userData = snapshot.value;
   });
 
   return userData;

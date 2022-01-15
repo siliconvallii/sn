@@ -6,24 +6,20 @@ Future<List> fetchChats() async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   // fetch chats
-  dynamic chatsMap;
+  List chats = [];
 
   await ref.child('chats').get().then((snapshot) {
     // fetch all chats
     dynamic _allChatsMap = snapshot.value;
 
-    _allChatsMap.forEach((String key, Map value) {
+    _allChatsMap.forEach((key, value) {
       // check if user is involved in each chat
       if (key.contains(user['uid'])) {
         // user is involved, add chat to chatsMap
-        chatsMap.add(value);
+        chats.add(value);
       }
     });
   });
 
-  // convert Map chatsMap in List chatsList
-  List chatsList = [];
-  chatsMap.forEach((String key, Map value) => chatsList.add(value));
-
-  return chatsList;
+  return chats;
 }
