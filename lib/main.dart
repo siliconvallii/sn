@@ -21,7 +21,7 @@ class SN extends StatelessWidget {
       routes: {
         '/home': (BuildContext context) => const HomeScreen(),
         '/initial': (BuildContext context) => const InitialScreen(),
-        '/new_chat': (BuildContext context) => NewChatScreen(),
+        '/new_chat': (BuildContext context) => const NewChatScreen(),
         '/sign_up': (BuildContext context) => const SignUpScreen(),
       },
     );

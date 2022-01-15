@@ -15,7 +15,12 @@ class UserRepliedCard extends StatelessWidget {
             ? const Center(child: CircularProgressIndicator())
             : Row(
                 children: [
-                  Image.network(snapshot.data['profile_picture']),
+                  SizedBox(
+                    child: Image.network(
+                      snapshot.data['profile_picture'],
+                    ),
+                    height: 50,
+                  ),
                   Column(
                     children: [
                       Text(snapshot.data['username']),
