@@ -130,17 +130,17 @@ class _NewChatScreenState extends State<NewChatScreen> {
                   } else {
                     // user was found
 
-                    String chatKey = user['uid'] + _recipientController.text;
+                    String chatKey = user['uid'] + recipientData['uid'];
 
                     // check if chat already exists
                     await ref.child('chats').get().then((snapshot) {
                       // fetch all chats
                       dynamic _allChatsMap = snapshot.value;
 
-                      _allChatsMap.forEach((String key, Map value) {
+                      _allChatsMap.forEach((key, value) {
                         // check if users are involved in each chat
                         if (key.contains(user['uid']) &&
-                            key.contains(_recipientController.text)) {
+                            key.contains(recipientData['uid'])) {
                           // users are involved
 
                           // overwrite chatKey with existing chat key
