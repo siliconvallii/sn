@@ -26,7 +26,7 @@ class UserHasToReplyCard extends StatelessWidget {
                     children: [
                       Text(snapshot.data['username']),
                       Text(
-                        'Ti ha risposto' +
+                        'Ti ha scritto ' +
                             DateTime.now()
                                 .difference(DateTime.parse(chatData['sent_at']))
                                 .inHours
