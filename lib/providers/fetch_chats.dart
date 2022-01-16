@@ -9,6 +9,8 @@ Future<List> fetchChats() async {
   List chats = [];
 
   await ref.child('chats').get().then((snapshot) async {
+    List friends = [];
+
     // fetch all chats
     dynamic _allChatsMap = snapshot.value;
 
@@ -17,8 +19,16 @@ Future<List> fetchChats() async {
       if (key.contains(user['uid'])) {
         // user is involved
 
-        // update friendship status
+        // fetch other user uid
+        String otherUserUid = '';
 
+        if (value['sender'] == user['uid']) {
+          otherUserUid = value['recipient'];
+        } else {
+          otherUserUid = value['sender'];
+        }
+
+        // update friendship status
         int hoursSinceLast =
             DateTime.now().difference(DateTime.parse(value['sent_at'])).inHours;
 
@@ -28,6 +38,9 @@ Future<List> fetchChats() async {
 
           // update friendship status to true
           ref.child('chats').child(key).child('friends').set(true);
+
+          // add friend to friends List
+          friends.add(otherUserUid);
         } else {
           // users aren't friends
 
@@ -39,6 +52,7 @@ Future<List> fetchChats() async {
         chats.add(value);
       }
     });
+    await ref.child('users').child(user['uid']).child('friends').set(friends);
   });
   return chats;
 }
