@@ -8,23 +8,24 @@ class InitialScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  signIn(context);
-                },
-                child: const Text('Entra con Google'),
-              ),
-              const Text('oppure'),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Accedi con Apple'),
-              ),
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Image.asset('assets/images/initial_screen_image.png'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                signIn(context);
+              },
+              child: const Text('Entra con Google'),
+            ),
+            const Text('oppure'),
+            TextButton(
+              onPressed: () {},
+              child: const Text('Accedi con Apple'),
+            ),
+          ],
         ),
       ),
     );

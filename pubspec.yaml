@@ -41,6 +41,7 @@ dependencies:
   image_cropper: ^1.4.1
   uuid: ^3.0.5
   firebase_storage: ^10.2.5
+  google_fonts: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -67,7 +68,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/default_pp.jpg
-  #   - images/a_dot_ham.jpeg
+    - assets/images/initial_screen_image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
