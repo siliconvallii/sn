@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sn/providers/sign_in.dart';
 
 class InitialScreen extends StatelessWidget {
@@ -6,26 +7,49 @@ class InitialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _imageSize = MediaQuery.of(context).size.width * 0.9;
+
     return Scaffold(
+      backgroundColor: const Color(0xff121212),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Expanded(
-              child: Image.asset('assets/images/initial_screen_image.png'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                signIn(context);
-              },
-              child: const Text('Entra con Google'),
-            ),
-            const Text('oppure'),
-            TextButton(
-              onPressed: () {},
-              child: const Text('Accedi con Apple'),
-            ),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Spacer(flex: 4),
+              SizedBox(
+                child: Image.asset('assets/images/initial_screen_image.png'),
+                height: _imageSize,
+                width: _imageSize,
+              ),
+              Text(
+                'eeloo',
+                style: GoogleFonts.alata(
+                  color: Colors.white,
+                  fontSize: 64,
+                ),
+              ),
+              const Spacer(flex: 10),
+              ElevatedButton(
+                child: const Text('entra con Google'),
+                onPressed: () => signIn(context),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    Colors.white,
+                  ),
+                  foregroundColor: MaterialStateProperty.all(
+                    Colors.black,
+                  ),
+                  textStyle: MaterialStateProperty.all(
+                    GoogleFonts.alata(
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(flex: 2),
+            ],
+          ),
         ),
       ),
     );
