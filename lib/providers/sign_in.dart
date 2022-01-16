@@ -56,6 +56,8 @@ void signIn(BuildContext context) async {
         user['class'] = snapshot.child('class').value;
         user['section'] = snapshot.child('section').value;
         user['username'] = snapshot.child('username').value;
+        user['friends'] = snapshot.child('friends').value;
+        user['total_friends'] = snapshot.child('total_friends').value;
       });
 
       // navigate to HomeScreen

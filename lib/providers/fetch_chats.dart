@@ -52,7 +52,21 @@ Future<List> fetchChats() async {
         chats.add(value);
       }
     });
-    await ref.child('users').child(user['uid']).child('friends').set(friends);
+    // update friends List
+    await ref
+        .child('users')
+        .child(user['uid'])
+        .child('friends')
+        .set(friends)
+        .then((snap) => user['friends'] = friends);
+
+    // update totalFriends
+    await ref
+        .child('users')
+        .child(user['uid'])
+        .child('total_friends')
+        .set(friends.length)
+        .then((snap) => user['total_friends'] = friends.length);
   });
   return chats;
 }
