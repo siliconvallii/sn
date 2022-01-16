@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sn/providers/fetch_user_data.dart';
+import 'package:sn/screens/profile_screen.dart';
 
 class UserRepliedCard extends StatelessWidget {
   final Map chatData;
@@ -15,11 +16,23 @@ class UserRepliedCard extends StatelessWidget {
             ? const Center(child: CircularProgressIndicator())
             : Row(
                 children: [
-                  SizedBox(
-                    child: Image.network(
-                      snapshot.data['profile_picture'],
+                  InkWell(
+                    child: SizedBox(
+                      child: Image.network(
+                        snapshot.data['profile_picture'],
+                      ),
+                      height: 50,
                     ),
-                    height: 50,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => ProfileScreen(
+                            profile: snapshot.data,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   Column(
                     children: [
