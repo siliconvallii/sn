@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sn/providers/fetch_chats.dart';
 import 'package:sn/providers/sign_in.dart';
+import 'package:sn/screens/my_profile_screen.dart';
 import 'package:sn/widgets/start_chat_button.dart';
 import 'package:sn/widgets/user_has_to_reply_card.dart';
 import 'package:sn/widgets/user_replied_card.dart';
@@ -20,6 +21,20 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text('SN'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      MyProfileScreen(profile: user),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: FutureBuilder(
