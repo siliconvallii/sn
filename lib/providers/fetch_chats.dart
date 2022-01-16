@@ -12,29 +12,27 @@ Future<List> fetchChats() async {
     // fetch all chats
     dynamic _allChatsMap = snapshot.value;
 
-    await _allChatsMap.forEach((key, value) async {
+    await _allChatsMap.forEach((key, value) {
       // check if user is involved in each chat
       if (key.contains(user['uid'])) {
         // user is involved
 
         // update friendship status
 
+        int hoursSinceLast =
+            DateTime.now().difference(DateTime.parse(value['sent_at'])).inHours;
+
         // check if users are in touch
-        if (DateTime.now()
-                .difference(
-                  DateTime.parse(value['sent_at']),
-                )
-                .inHours <
-            24) {
+        if (hoursSinceLast < 24) {
           // users are friends
 
           // update friendship status to true
-          await ref.child('chats').child(key).child('friends').set(true);
+          ref.child('chats').child(key).child('friends').set(true);
         } else {
-          // user aren't friends
+          // users aren't friends
 
           // update friendship status to false
-          await ref.child('chats').child(key).child('friends').set(false);
+          ref.child('chats').child(key).child('friends').set(false);
         }
 
         // add chat to chatsMap
@@ -42,6 +40,5 @@ Future<List> fetchChats() async {
       }
     });
   });
-
   return chats;
 }
