@@ -276,76 +276,128 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: ElevatedButton(
                   child: const Text('invia messaggio'),
                   onPressed: () async {
-                    // show loading indicator
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const CircularProgressIndicator();
-                      },
-                    );
-
-                    // instatiate reference of Realtime Database
-                    final DatabaseReference ref =
-                        FirebaseDatabase.instance.ref();
-
-                    String chatKey = user['uid'] + widget.senderData['uid'];
-
-                    // check if chat already exists
-                    await ref.child('chats').get().then((snapshot) async {
-                      // fetch all chats
-                      dynamic _allChatsMap = snapshot.value;
-
-                      await _allChatsMap.forEach((key, value) {
-                        // check if users are involved in each chat
-                        if (key.contains(user['uid']) &&
-                            key.contains(widget.senderData['uid'])) {
-                          // users are involved
-
-                          // overwrite chatKey with existing chat key
-                          chatKey = key;
-                        }
-                      });
-                    });
-
-                    // upload image
-                    String imageUrl = await uploadImage(_image!);
-
-                    Map chatMap = {
-                      'image': imageUrl,
-                      'text': _textController.text,
-                      'sender': user['uid'],
-                      'sent_at': DateTime.now().toString(),
-                      'recipient': widget.senderData['uid'],
-                    };
-
-                    // upload message to chat
-                    await ref
-                        .child('chats')
-                        .child(chatKey)
-                        .set(chatMap)
-                        .then((value) {
-                      // pop loading indicator
-                      Navigator.pop(context);
-
-                      // show successful dialog
+                    // check if there are image and text
+                    if (_image == null) {
+                      // image is missing
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: const Text('Fatto!'),
+                            title: const Text('errore!'),
                             content: const Text(
-                              'Messaggio inviato con successo!',
+                              'devi inserire un\'immagine per inviare',
                             ),
                             actions: <TextButton>[
                               TextButton(
-                                child: const Text('Ok'),
+                                child: const Text('ok'),
                                 onPressed: () => Navigator.pop(context),
                               ),
                             ],
                           );
                         },
                       );
-                    });
+                    } else if (_textController.text == '') {
+                      // text is missing
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('errore!'),
+                            content: const Text(
+                              'devi scrivere un messaggio per inviare',
+                            ),
+                            actions: <TextButton>[
+                              TextButton(
+                                child: const Text('ok'),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      // dismiss keyboard
+                      FocusManager.instance.primaryFocus?.unfocus();
+
+                      // show loading indicator
+                      showDialog(
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        context: context,
+                      );
+
+                      // instatiate reference of Realtime Database
+                      final DatabaseReference ref =
+                          FirebaseDatabase.instance.ref();
+
+                      String chatKey = user['uid'] + widget.senderData['uid'];
+
+                      // check if chat already exists
+                      await ref.child('chats').get().then((snapshot) async {
+                        // fetch all chats
+                        dynamic _allChatsMap = snapshot.value;
+
+                        await _allChatsMap.forEach((key, value) {
+                          // check if users are involved in each chat
+                          if (key.contains(user['uid']) &&
+                              key.contains(widget.senderData['uid'])) {
+                            // users are involved
+
+                            // overwrite chatKey with existing chat key
+                            chatKey = key;
+                          }
+                        });
+                      });
+
+                      // upload image
+                      String imageUrl = await uploadImage(_image!);
+
+                      Map chatMap = {
+                        'image': imageUrl,
+                        'text': _textController.text,
+                        'sender': user['uid'],
+                        'sent_at': DateTime.now().toString(),
+                        'recipient': widget.senderData['uid'],
+                      };
+
+                      // upload message to chat
+                      await ref
+                          .child('chats')
+                          .child(chatKey)
+                          .set(chatMap)
+                          .then((value) {
+                        // pop loading indicator
+                        Navigator.pop(context);
+
+                        // navigate back to HomeScreen
+                        Navigator.pushNamed(context, '/home').then(
+                          (value) => setState(() {}),
+                        );
+
+                        // show successful dialog
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Fatto!'),
+                              content: const Text(
+                                'Messaggio inviato con successo!',
+                              ),
+                              actions: <TextButton>[
+                                TextButton(
+                                  child: const Text('Ok'),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      });
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
