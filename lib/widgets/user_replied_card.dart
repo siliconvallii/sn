@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sn/providers/fetch_user_data.dart';
 import 'package:sn/screens/profile_screen.dart';
 
@@ -14,40 +15,74 @@ class UserRepliedCard extends StatelessWidget {
         return (snapshot.connectionState == ConnectionState.waiting)
             // snapshot is waiting
             ? const Center(child: CircularProgressIndicator())
-            : Row(
-                children: [
-                  InkWell(
-                    child: SizedBox(
-                      child: Image.network(
-                        snapshot.data['profile_picture'],
-                      ),
-                      height: 50,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => ProfileScreen(
-                            profile: snapshot.data,
+            : Container(
+                child: Row(
+                  children: [
+                    InkWell(
+                      child: SizedBox(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            snapshot.data['profile_picture'],
                           ),
                         ),
-                      );
-                    },
-                  ),
-                  Column(
-                    children: [
-                      Text(snapshot.data['username']),
-                      Text(
-                        'Hai risposto ' +
-                            DateTime.now()
-                                .difference(DateTime.parse(chatData['sent_at']))
-                                .inHours
-                                .toString() +
-                            ' ore fa',
+                        height: 50,
+                        width: 50,
                       ),
-                    ],
-                  ),
-                ],
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => ProfileScreen(
+                              profile: snapshot.data,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          Text(
+                            snapshot.data['username'],
+                            style: GoogleFonts.alata(
+                              color: Colors.white,
+                              fontSize: 17,
+                            ),
+                          ),
+                          Text(
+                            'Hai risposto ' +
+                                DateTime.now()
+                                    .difference(
+                                        DateTime.parse(chatData['sent_at']))
+                                    .inHours
+                                    .toString() +
+                                ' ore fa',
+                            style: GoogleFonts.alata(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ),
+                      margin: const EdgeInsets.only(
+                        left: 10,
+                      ),
+                    ),
+                  ],
+                ),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Color(0xff1E1E1E),
+                ),
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                  top: 10,
+                ),
               );
       },
     );
