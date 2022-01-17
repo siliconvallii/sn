@@ -1,7 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sn/providers/create_profile.dart';
+import 'package:sn/providers/sign_in.dart';
+import 'package:sn/utils/crop_image_to_square.dart';
+import 'package:sn/utils/pick_image.dart';
 import 'package:sn/utils/pick_profile_image.dart';
+import 'package:sn/utils/take_image.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -13,135 +19,282 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   String _dropdownValue = 'I';
   String _secondDropdownValue = 'A';
+
+  final String _templateImageUrl =
+      'https://img.myloview.it/quadri/upload-vector-icon-cloud-storage-symbol-upload-to-cloud-icon-modern-simple-line-style-vector-illustration-for-web-site-or-mobile-app-700-176322192.jpg';
   File? _profileImage;
-  final TextEditingController _textEditingController = TextEditingController();
+
+  final TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    double _marginSize = MediaQuery.of(context).size.width * 0.03;
+
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xff2E2E2E),
+        centerTitle: true,
+        elevation: 0,
+        title: Text(
+          'completa il tuo profilo',
+          style: GoogleFonts.alata(),
+        ),
+      ),
+      backgroundColor: const Color(0xff121212),
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Text('Ciao!\nCompleta il tuo profilo per continuare'),
-                _profileImage != null
-                    ? Image.file(_profileImage!)
-                    : Image.asset('assets/images/default_pp.jpg'),
-                TextButton(
-                  onPressed: () async {
-                    File? profileImage = await pickProfileImage();
-                    setState(() {
-                      _profileImage = profileImage;
-                    });
-                  },
-                  child: _profileImage != null
-                      ? const Text('Cambia immagine profilo')
-                      : const Text('Carica immagine profilo'),
-                ),
-                Row(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                child: Column(
                   children: [
-                    const Text('Classe:'),
-                    DropdownButton<String>(
-                      items: const [
-                        DropdownMenuItem(
-                          child: Text('I'),
-                          value: 'I',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('II'),
-                          value: 'II',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('III'),
-                          value: 'III',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('IV'),
-                          value: 'IV',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('V'),
-                          value: 'V',
-                        ),
-                      ],
-                      onChanged: (newValue) => setState(() {
-                        _dropdownValue = newValue.toString();
-                      }),
-                      value: _dropdownValue,
+                    Container(
+                      child: Column(
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'ciao!\n',
+                                  style: GoogleFonts.alata(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      'completa il tuo profilo per continuare',
+                                  style: GoogleFonts.alata(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                      margin: EdgeInsets.all(
+                        _marginSize,
+                      ),
                     ),
-                    DropdownButton<String>(
-                      items: const [
-                        DropdownMenuItem(
-                          child: Text('A'),
-                          value: 'A',
+                    SizedBox(
+                      child: _profileImage == null
+                          ? Image.network(_templateImageUrl)
+                          : Image.file(_profileImage!),
+                      width: double.infinity,
+                    ),
+                    TextButton(
+                      child: Text(
+                        'prendi immagine dalla libreria',
+                        style: GoogleFonts.alata(
+                          color: const Color(0xffBC91F8),
+                          fontSize: 17,
                         ),
-                        DropdownMenuItem(
-                          child: Text('B'),
-                          value: 'B',
+                      ),
+                      onPressed: () async {
+                        // take image
+                        XFile? tempImage = await takeImage();
+
+                        // crop image to square
+                        File? image = await cropImageToSquare(tempImage!);
+
+                        // initialize image
+                        setState(() {
+                          _profileImage = image;
+                        });
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        'scatta fotografia',
+                        style: GoogleFonts.alata(
+                          color: const Color(0xffBC91F8),
+                          fontSize: 17,
                         ),
-                        DropdownMenuItem(
-                          child: Text('C'),
-                          value: 'C',
+                      ),
+                      onPressed: () async {
+                        // pick image
+                        XFile? tempImage = await pickImage();
+
+                        // crop image to square
+                        File? image = await cropImageToSquare(tempImage!);
+
+                        // initialize image
+                        setState(() {
+                          _profileImage = image;
+                        });
+                      },
+                    ),
+                    Container(
+                      child: Row(
+                        children: [
+                          Text(
+                            'classe:',
+                            style: GoogleFonts.alata(
+                              color: Colors.white,
+                              fontSize: 17,
+                            ),
+                          ),
+                          Container(
+                            child: DropdownButton<String>(
+                              dropdownColor: const Color(0xff2E2E2E),
+                              items: const [
+                                DropdownMenuItem(
+                                  child: Text('I'),
+                                  value: 'I',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('II'),
+                                  value: 'II',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('III'),
+                                  value: 'III',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('IV'),
+                                  value: 'IV',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('V'),
+                                  value: 'V',
+                                ),
+                              ],
+                              onChanged: (newValue) => setState(() {
+                                _dropdownValue = newValue.toString();
+                              }),
+                              style: GoogleFonts.alata(
+                                color: Colors.white,
+                                fontSize: 17,
+                              ),
+                              value: _dropdownValue,
+                            ),
+                            margin: EdgeInsets.only(left: _marginSize),
+                          ),
+                          Container(
+                            child: DropdownButton<String>(
+                              dropdownColor: const Color(0xff2E2E2E),
+                              items: const [
+                                DropdownMenuItem(
+                                  child: Text('A'),
+                                  value: 'A',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('B'),
+                                  value: 'B',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('C'),
+                                  value: 'C',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('D'),
+                                  value: 'D',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('E'),
+                                  value: 'E',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('F'),
+                                  value: 'F',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('G'),
+                                  value: 'G',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('H'),
+                                  value: 'H',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('I'),
+                                  value: 'I',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('L'),
+                                  value: 'L',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('M'),
+                                  value: 'M',
+                                ),
+                              ],
+                              onChanged: (newValue) => setState(() {
+                                _secondDropdownValue = newValue.toString();
+                              }),
+                              style: GoogleFonts.alata(
+                                color: Colors.white,
+                                fontSize: 17,
+                              ),
+                              value: _secondDropdownValue,
+                            ),
+                            margin: EdgeInsets.only(left: _marginSize),
+                          ),
+                        ],
+                      ),
+                      margin: EdgeInsets.all(_marginSize),
+                    ),
+                    Container(
+                      child: TextField(
+                        controller: _textController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'scrivi una breve bio...',
+                          hintStyle: GoogleFonts.alata(
+                            color: Colors.grey,
+                            fontSize: 17,
+                          ),
                         ),
-                        DropdownMenuItem(
-                          child: Text('D'),
-                          value: 'D',
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        style: GoogleFonts.alata(
+                          color: Colors.white,
+                          fontSize: 17,
                         ),
-                        DropdownMenuItem(
-                          child: Text('E'),
-                          value: 'E',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('F'),
-                          value: 'F',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('G'),
-                          value: 'G',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('H'),
-                          value: 'H',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('I'),
-                          value: 'I',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('L'),
-                          value: 'L',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('M'),
-                          value: 'M',
-                        ),
-                      ],
-                      onChanged: (newValue) => setState(() {
-                        _secondDropdownValue = newValue.toString();
-                      }),
-                      value: _secondDropdownValue,
+                      ),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: _marginSize,
+                      ),
                     ),
                   ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
                 ),
-                const Text('Bio:'),
-                TextField(
-                  controller: _textEditingController,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                  color: Color(0xff1E1E1E),
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    createProfile(
-                      context,
-                      _profileImage,
-                      _dropdownValue,
-                      _secondDropdownValue,
-                      _textEditingController.text,
-                    );
-                  },
-                  child: const Text('Completa registrazione'),
+                margin: EdgeInsets.all(_marginSize),
+              ),
+              ElevatedButton(
+                child: const Text('completa registrazione'),
+                onPressed: () async {
+                  createProfile(
+                    context,
+                    _profileImage,
+                    _dropdownValue,
+                    _secondDropdownValue,
+                    _textController.text,
+                  );
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color(0xff63D7C6),
+                  ),
+                  foregroundColor:
+                      MaterialStateProperty.all(const Color(0xff121212)),
+                  textStyle: MaterialStateProperty.all(
+                    GoogleFonts.alata(
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
