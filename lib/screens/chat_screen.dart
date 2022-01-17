@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -100,7 +101,19 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                     SizedBox(
-                      child: Image.network(widget.chatData['image']),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.fill,
+                        errorWidget:
+                            (BuildContext context, String url, dynamic error) =>
+                                const Icon(Icons.error),
+                        imageUrl: widget.chatData['image'],
+                        placeholder: (BuildContext context, String url) =>
+                            const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xffBC91F8),
+                          ),
+                        ),
+                      ),
                       width: double.infinity,
                     ),
                     Container(
@@ -193,7 +206,19 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     SizedBox(
                       child: _image == null
-                          ? Image.network(_templateImageUrl)
+                          ? CachedNetworkImage(
+                              fit: BoxFit.fill,
+                              errorWidget: (BuildContext context, String url,
+                                      dynamic error) =>
+                                  const Icon(Icons.error),
+                              imageUrl: _templateImageUrl,
+                              placeholder: (BuildContext context, String url) =>
+                                  const Center(
+                                child: CircularProgressIndicator(
+                                  color: Color(0xffBC91F8),
+                                ),
+                              ),
+                            )
                           : Image.file(_image!),
                       width: double.infinity,
                     ),

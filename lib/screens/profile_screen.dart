@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sn/providers/fetch_if_friends.dart';
@@ -28,7 +29,11 @@ class ProfileScreen extends StatelessWidget {
             builder: (context, snapshot) {
               return (snapshot.connectionState == ConnectionState.waiting)
                   // snapshot is waiting
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xffBC91F8),
+                      ),
+                    )
                   : SingleChildScrollView(
                       child: Container(
                         child: Column(
@@ -38,8 +43,19 @@ class ProfileScreen extends StatelessWidget {
                                 SizedBox(
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
-                                    child: Image.network(
-                                      profile['profile_picture'],
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.fill,
+                                      errorWidget: (BuildContext context,
+                                              String url, dynamic error) =>
+                                          const Icon(Icons.error),
+                                      imageUrl: profile['profile_picture'],
+                                      placeholder:
+                                          (BuildContext context, String url) =>
+                                              const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Color(0xffBC91F8),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   height: _imageSize,

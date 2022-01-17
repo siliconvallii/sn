@@ -51,7 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             return (snapshot.connectionState == ConnectionState.waiting)
                 // snapshot is waiting
-                ? const Center(child: CircularProgressIndicator())
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Color(0xffBC91F8),
+                    ),
+                  )
                 : RefreshIndicator(
                     onRefresh: () async {
                       await fetchChats();

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sn/providers/fetch_user_data.dart';
@@ -24,8 +25,18 @@ class UserHasToReplyCard extends StatelessWidget {
                       child: SizedBox(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            snapshot.data['profile_picture'],
+                          child: CachedNetworkImage(
+                            fit: BoxFit.fill,
+                            errorWidget: (BuildContext context, String url,
+                                    dynamic error) =>
+                                const Icon(Icons.error),
+                            imageUrl: snapshot.data['profile_picture'],
+                            placeholder: (BuildContext context, String url) =>
+                                const Center(
+                              child: CircularProgressIndicator(
+                                color: Color(0xffBC91F8),
+                              ),
+                            ),
                           ),
                         ),
                         height: 50,
@@ -54,7 +65,7 @@ class UserHasToReplyCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Ti ha scritto ' +
+                              'ti ha scritto ' +
                                   DateTime.now()
                                       .difference(
                                           DateTime.parse(chatData['sent_at']))
