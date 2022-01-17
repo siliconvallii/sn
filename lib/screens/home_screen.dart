@@ -17,78 +17,81 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      MyProfileScreen(profile: user),
-                ),
-              );
+    return WillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        MyProfileScreen(profile: user),
+                  ),
+                );
+              },
+            ),
+          ],
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color(0xff2E2E2E),
+          centerTitle: true,
+          elevation: 0,
+          title: Text(
+            'eeloo',
+            style: GoogleFonts.alata(
+              fontSize: 24,
+            ),
+          ),
+        ),
+        backgroundColor: const Color(0xff121212),
+        body: SafeArea(
+          child: FutureBuilder(
+            future: fetchChats(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              return (snapshot.connectionState == ConnectionState.waiting)
+                  // snapshot is waiting
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xffBC91F8),
+                      ),
+                    )
+                  : RefreshIndicator(
+                      onRefresh: () async {
+                        await fetchChats();
+                        setState(() {});
+                      },
+                      child: (snapshot.hasError)
+                          // snapshot has error
+                          ? Text(snapshot.error.toString())
+                          // snapshot has data
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                if (snapshot.data![index]['sender'] ==
+                                    user['uid']) {
+                                  // user replied last
+                                  return UserRepliedCard(
+                                    chatData: snapshot.data![index],
+                                  );
+                                } else {
+                                  // user has to reply
+                                  return UserHasToReplyCard(
+                                    chatData: snapshot.data![index],
+                                  );
+                                }
+                              },
+                            ),
+                    );
             },
           ),
-        ],
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xff2E2E2E),
-        centerTitle: true,
-        elevation: 0,
-        title: Text(
-          'eeloo',
-          style: GoogleFonts.alata(
-            fontSize: 24,
-          ),
         ),
+        floatingActionButton: const StartChatButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
-      backgroundColor: const Color(0xff121212),
-      body: SafeArea(
-        child: FutureBuilder(
-          future: fetchChats(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return (snapshot.connectionState == ConnectionState.waiting)
-                // snapshot is waiting
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: Color(0xffBC91F8),
-                    ),
-                  )
-                : RefreshIndicator(
-                    onRefresh: () async {
-                      await fetchChats();
-                      setState(() {});
-                    },
-                    child: (snapshot.hasError)
-                        // snapshot has error
-                        ? Text(snapshot.error.toString())
-                        // snapshot has data
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              if (snapshot.data![index]['sender'] ==
-                                  user['uid']) {
-                                // user replied last
-                                return UserRepliedCard(
-                                  chatData: snapshot.data![index],
-                                );
-                              } else {
-                                // user has to reply
-                                return UserHasToReplyCard(
-                                  chatData: snapshot.data![index],
-                                );
-                              }
-                            },
-                          ),
-                  );
-          },
-        ),
-      ),
-      floatingActionButton: const StartChatButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      onWillPop: () async => false,
     );
   }
 }
