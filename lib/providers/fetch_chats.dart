@@ -9,7 +9,7 @@ Future<List> fetchChats() async {
   List chats = [];
 
   await ref.child('chats').get().then((snapshot) async {
-    List friends = [];
+    Map friends = {};
 
     // fetch all chats
     dynamic _allChatsMap = snapshot.value;
@@ -45,8 +45,10 @@ Future<List> fetchChats() async {
           // update friendship status to true
           ref.child('chats').child(key).child('friends').set(true);
 
-          // add friend to friends List
-          friends.add(otherUserUid);
+          // add friend to friends Map
+          friends[otherUserUid] = {
+            'last_message_at': value['sent_at'],
+          };
         } else {
           // users aren't friends
 
@@ -58,7 +60,7 @@ Future<List> fetchChats() async {
         chats.add(value);
       }
     });
-    // update friends List
+    // update friends Map
     await ref
         .child('users')
         .child(user['uid'])
