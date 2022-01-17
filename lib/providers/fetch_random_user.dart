@@ -12,14 +12,10 @@ Future<Map> fetchRandomUser() async {
     users = snapshot.value;
 
     users.forEach((key, value) {
-      if (value['uid'] != null && value['uid'] != user['uid']) {
-        if (value['total_friends'] > 0) {
-          if (value['friends'].contains(user['uid']) == false) {
-            randomUsersList.add(value);
-          }
-        } else {
-          randomUsersList.add(value);
-        }
+      if (value['uid'] != null &&
+          value['uid'] != user['uid'] &&
+          user['friends'][value['uid']] != null) {
+        randomUsersList.add(value);
       }
     });
 
