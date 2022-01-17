@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="it.produzionisiliconesi.sn">
    <application
-        android:label="sn"
+        android:label="eeloo"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
