@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sn/providers/create_profile.dart';
-import 'package:sn/providers/sign_in.dart';
 import 'package:sn/utils/crop_image_to_square.dart';
 import 'package:sn/utils/pick_image.dart';
-import 'package:sn/utils/pick_profile_image.dart';
 import 'package:sn/utils/take_image.dart';
 
 class SignUpScreen extends StatefulWidget {
