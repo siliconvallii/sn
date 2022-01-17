@@ -268,8 +268,11 @@ class _NewChatScreenState extends State<NewChatScreen> {
                       });
 
                       // check if user was found
-                      if (recipientData == {}) {
+                      if (recipientData['uid'] == null) {
                         // user wasn't found
+                        print('debug');
+                        // pop loading indicator
+                        Navigator.pop(context);
 
                         // show error
                         showDialog(
