@@ -14,7 +14,7 @@ void signIn(BuildContext context) async {
   String emailDomain = emailStrings[1];
 
   // check if email domain is allowed
-  if (emailDomain == 'studenti.liceosarpi.bg.it') {
+  if (emailDomain != '') {
     // email domain is allowed
 
     // fetch credential from Google User
