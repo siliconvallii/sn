@@ -6,23 +6,27 @@ Future<Map> fetchRandomUser() async {
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   dynamic users;
-  Map randomUser = {};
+  List randomUsersList = [];
 
   await ref.child('users').get().then((snapshot) {
     users = snapshot.value;
 
-    List usersList = [];
-    users.forEach((key, value) => usersList.add(value));
+    users.forEach((key, value) {
+      if (value['uid'] != null && value['uid'] != user['uid']) {
+        if (value['total_friends'] > 0) {
+          if (value['friends'].contains(user['uid']) == false) {
+            randomUsersList.add(value);
+          }
+        } else {
+          randomUsersList.add(value);
+        }
+      }
+    });
 
-    while (randomUser['uid'] == null ||
-        randomUser['uid'] == user['uid'] ||
-        randomUser['total_friends'] != 0 &&
-            randomUser['friends'].contains(user['uid'])) {
-      randomUser = (usersList.toList()..shuffle()).first;
-    }
+    randomUsersList.shuffle();
 
     // put example user last in List
-    usersList.sort((a, b) {
+    randomUsersList.sort((a, b) {
       if (b['uid'] != 'example') {
         return 1;
       } else {
@@ -31,5 +35,5 @@ Future<Map> fetchRandomUser() async {
     });
   });
 
-  return randomUser;
+  return randomUsersList[0];
 }
