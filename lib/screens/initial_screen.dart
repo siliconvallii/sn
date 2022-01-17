@@ -30,28 +30,28 @@ class InitialScreen extends StatelessWidget {
                 ),
               ),
               const Spacer(flex: 10),
-              ElevatedButton(
-                child: const Text('entra con Google'),
-                onPressed: () => signIn(context),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color(0xff63D7C6),
-                  ),
-                  foregroundColor: MaterialStateProperty.all(
-                    const Color(0xff121212),
-                  ),
-                  textStyle: MaterialStateProperty.all(
-                    GoogleFonts.alata(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-              const Spacer(flex: 2),
             ],
           ),
         ),
       ),
+      floatingActionButton: ElevatedButton(
+        child: const Text('entra con Google'),
+        onPressed: () => signIn(context),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(
+            const Color(0xff63D7C6),
+          ),
+          foregroundColor: MaterialStateProperty.all(
+            const Color(0xff121212),
+          ),
+          textStyle: MaterialStateProperty.all(
+            GoogleFonts.alata(
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
