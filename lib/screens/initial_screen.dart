@@ -7,7 +7,7 @@ class InitialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _imageSize = MediaQuery.of(context).size.width * 0.9;
+    double _imageSize = MediaQuery.of(context).size.width * 0.7;
 
     return Scaffold(
       backgroundColor: const Color(0xff121212),
@@ -26,7 +26,7 @@ class InitialScreen extends StatelessWidget {
                 'eeloo',
                 style: GoogleFonts.alata(
                   color: Colors.white,
-                  fontSize: 64,
+                  fontSize: 48,
                 ),
               ),
               const Spacer(flex: 10),
@@ -35,14 +35,14 @@ class InitialScreen extends StatelessWidget {
                 onPressed: () => signIn(context),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
-                    Colors.white,
+                    const Color(0xff63D7C6),
                   ),
                   foregroundColor: MaterialStateProperty.all(
-                    Colors.black,
+                    const Color(0xff121212),
                   ),
                   textStyle: MaterialStateProperty.all(
                     GoogleFonts.alata(
-                      fontSize: 17,
+                      fontSize: 14,
                     ),
                   ),
                 ),
