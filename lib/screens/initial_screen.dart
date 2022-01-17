@@ -17,11 +17,6 @@ class InitialScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               const Spacer(flex: 4),
-              SizedBox(
-                child: Image.asset('assets/images/initial_screen_image.png'),
-                height: _imageSize,
-                width: _imageSize,
-              ),
               Text(
                 'eeloo',
                 style: GoogleFonts.alata(
