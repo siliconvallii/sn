@@ -16,9 +16,19 @@ Future<Map> fetchRandomUser() async {
 
     while (randomUser['uid'] == null ||
         randomUser['uid'] == user['uid'] ||
-        randomUser['friends'].contains(user['uid'])) {
+        randomUser['total_friends'] != 0 &&
+            randomUser['friends'].contains(user['uid'])) {
       randomUser = (usersList.toList()..shuffle()).first;
     }
+
+    // put example user last in List
+    usersList.sort((a, b) {
+      if (b['uid'] != 'example') {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
   });
 
   return randomUser;
