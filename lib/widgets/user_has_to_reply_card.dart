@@ -87,18 +87,31 @@ class UserHasToReplyCard extends StatelessWidget {
                       },
                     ),
                     const Spacer(),
-                    SizedBox(
-                      child: Container(
-                        child: const Icon(Icons.arrow_forward),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
+                    InkWell(
+                      child: SizedBox(
+                        child: Container(
+                          child: const Icon(Icons.arrow_forward),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            color: Color(0xffBC91F8),
                           ),
-                          color: Color(0xffBC91F8),
                         ),
+                        height: 50,
+                        width: 50,
                       ),
-                      height: 50,
-                      width: 50,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => ChatScreen(
+                              chatData: chatData,
+                              senderData: snapshot.data,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
