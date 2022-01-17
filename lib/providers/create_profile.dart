@@ -26,6 +26,7 @@ void createProfile(
   user['class'] = classValue;
   user['section'] = sectionValue;
   user['bio'] = bioString;
+  user['total_friends'] = 0;
 
   // instatiate reference of Realtime Database
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
