@@ -271,13 +271,72 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ElevatedButton(
                 child: const Text('completa registrazione'),
                 onPressed: () async {
-                  createProfile(
-                    context,
-                    _profileImage,
-                    _dropdownValue,
-                    _secondDropdownValue,
-                    _textController.text,
-                  );
+                  // check if there are image and text
+                  if (_profileImage == null) {
+                    // image is missing
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('errore!'),
+                          content: const Text(
+                            'devi inserire un\'immagine per il tuo profilo',
+                          ),
+                          actions: <TextButton>[
+                            TextButton(
+                              child: const Text('ok'),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else if (_textController.text == '') {
+                    // text is missing
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('errore!'),
+                          content: const Text(
+                            'devi scrivere una bio per il tuo profilo',
+                          ),
+                          actions: <TextButton>[
+                            TextButton(
+                              child: const Text('ok'),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    // dismiss keyboard
+                    FocusManager.instance.primaryFocus?.unfocus();
+
+                    // show loading indicator
+                    showDialog(
+                      barrierDismissible: false,
+                      builder: (context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                      context: context,
+                    );
+
+                    // pop loading indicator
+                    Navigator.pop(context);
+
+                    // create profile & navigate to HomeScreen
+                    createProfile(
+                      context,
+                      _profileImage,
+                      _dropdownValue,
+                      _secondDropdownValue,
+                      _textController.text,
+                    );
+                  }
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
