@@ -24,8 +24,14 @@ Future<List> fetchChats() async {
 
         if (value['sender'] == user['uid']) {
           otherUserUid = value['recipient'];
+
+          // add has_to_reply
+          value['has_to_reply'] = false;
         } else {
           otherUserUid = value['sender'];
+
+          // add has_to_reply
+          value['has_to_reply'] = true;
         }
 
         // update friendship status
@@ -68,5 +74,15 @@ Future<List> fetchChats() async {
         .set(friends.length)
         .then((snap) => user['total_friends'] = friends.length);
   });
+
+  // sort chats List
+  chats.sort((a, b) {
+    if (b['has_to_reply']) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+
   return chats;
 }
