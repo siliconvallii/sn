@@ -37,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 SizedBox(
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(20),
                                     child: Image.network(
                                       profile['profile_picture'],
                                     ),
