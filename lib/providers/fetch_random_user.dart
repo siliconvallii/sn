@@ -14,7 +14,7 @@ Future<Map> fetchRandomUser() async {
     users.forEach((key, value) {
       if (value['uid'] != null &&
           value['uid'] != user['uid'] &&
-          user['friends'][value['uid']] != null) {
+          user['friends'][value['uid']] == null) {
         randomUsersList.add(value);
       }
     });
