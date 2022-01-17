@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sn/providers/fetch_random_user.dart';
 import 'package:sn/providers/sign_in.dart';
 import 'package:sn/providers/upload_image.dart';
 import 'package:sn/utils/crop_image_to_square.dart';
@@ -99,6 +100,40 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                     horizontal: _marginSize,
                                   ),
                                 ),
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.person_search,
+                                  color: const Color(0xffBC91F8),
+                                ),
+                                onPressed: () async {
+                                  Map randomUser = await fetchRandomUser();
+                                  if (randomUser['uid'] == 'example') {
+                                    // random user not found
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('errore!'),
+                                          content: const Text(
+                                            'non è stato possibile trovare un utente casuale',
+                                          ),
+                                          actions: <TextButton>[
+                                            TextButton(
+                                              child: const Text('ok'),
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    // random user was found
+                                    _recipientController.text =
+                                        randomUser['username'];
+                                  }
+                                },
                               ),
                             ],
                           ),
