@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sn/providers/sign_in.dart';
 import 'package:sn/providers/upload_image.dart';
@@ -21,118 +22,347 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
+
+  final String _templateImageUrl =
+      'https://img.myloview.it/quadri/upload-vector-icon-cloud-storage-symbol-upload-to-cloud-icon-modern-simple-line-style-vector-illustration-for-web-site-or-mobile-app-700-176322192.jpg';
   File? _image;
 
   @override
   Widget build(BuildContext context) {
+    double _marginSize = MediaQuery.of(context).size.width * 0.03;
+
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xff2E2E2E),
         centerTitle: true,
-        title: const Text('Chat'),
+        elevation: 0,
+        title: Text(
+          'chat con ${widget.senderData['username']}',
+          style: GoogleFonts.alata(),
+        ),
       ),
+      backgroundColor: const Color(0xff121212),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text('Da ${widget.senderData['username']}'),
-              Text('A ${user['username']}'),
-              SizedBox(
-                child: Image.network(widget.chatData['image']),
-                width: double.infinity,
+              Container(
+                child: Column(
+                  children: [
+                    Container(
+                      child: Column(
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'da: ',
+                                  style: GoogleFonts.alata(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: widget.senderData['username'],
+                                  style: GoogleFonts.alata(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'a: ',
+                                  style: GoogleFonts.alata(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: user['username'],
+                                  style: GoogleFonts.alata(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                      margin: EdgeInsets.all(
+                        _marginSize,
+                      ),
+                    ),
+                    SizedBox(
+                      child: Image.network(widget.chatData['image']),
+                      width: double.infinity,
+                    ),
+                    Container(
+                      child: Text(
+                        widget.chatData['text'],
+                        style: GoogleFonts.alata(
+                          color: Colors.white,
+                          fontSize: 17,
+                        ),
+                      ),
+                      margin: EdgeInsets.all(
+                        _marginSize,
+                      ),
+                    ),
+                  ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                  color: Color(0xff1E1E1E),
+                ),
+                margin: EdgeInsets.all(_marginSize),
               ),
-              Text(widget.chatData['text']),
-              const Text('Rispondi'),
-              TextButton(
-                child: const Text('Prendi immagine dalla libreria'),
-                onPressed: () async {
-                  // take image
-                  XFile? tempImage = await takeImage();
-
-                  // crop image to square
-                  File? image = await cropImageToSquare(tempImage!);
-
-                  // initialize image
-                  _image = image;
-                },
+              Container(
+                child: Text(
+                  'rispondi a ${widget.senderData['username']}',
+                  style: GoogleFonts.alata(
+                    color: Colors.white,
+                    fontSize: 17,
+                  ),
+                ),
+                margin: EdgeInsets.all(
+                  _marginSize,
+                ),
               ),
-              TextButton(
-                child: const Text('Scatta fotografia'),
-                onPressed: () async {
-                  // pick image
-                  XFile? tempImage = await pickImage();
+              Container(
+                child: Column(
+                  children: [
+                    Container(
+                      child: Column(
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'da: ',
+                                  style: GoogleFonts.alata(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: user['username'],
+                                  style: GoogleFonts.alata(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'a: ',
+                                  style: GoogleFonts.alata(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: widget.senderData['username'],
+                                  style: GoogleFonts.alata(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                      margin: EdgeInsets.all(
+                        _marginSize,
+                      ),
+                    ),
+                    SizedBox(
+                      child: _image == null
+                          ? Image.network(_templateImageUrl)
+                          : Image.file(_image!),
+                      width: double.infinity,
+                    ),
+                    TextButton(
+                      child: Text(
+                        'prendi immagine dalla libreria',
+                        style: GoogleFonts.alata(
+                          color: const Color(0xffBC91F8),
+                          fontSize: 17,
+                        ),
+                      ),
+                      onPressed: () async {
+                        // take image
+                        XFile? tempImage = await takeImage();
 
-                  // crop image to square
-                  File? image = await cropImageToSquare(tempImage!);
+                        // crop image to square
+                        File? image = await cropImageToSquare(tempImage!);
 
-                  // initialize image
-                  _image = image;
-                },
+                        // initialize image
+                        setState(() {
+                          _image = image;
+                        });
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        'scatta fotografia',
+                        style: GoogleFonts.alata(
+                          color: const Color(0xffBC91F8),
+                          fontSize: 17,
+                        ),
+                      ),
+                      onPressed: () async {
+                        // pick image
+                        XFile? tempImage = await pickImage();
+
+                        // crop image to square
+                        File? image = await cropImageToSquare(tempImage!);
+
+                        // initialize image
+                        setState(() {
+                          _image = image;
+                        });
+                      },
+                    ),
+                    Container(
+                      child: TextField(
+                        controller: _textController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'scrivi messaggio...',
+                          hintStyle: GoogleFonts.alata(
+                            color: Colors.grey,
+                            fontSize: 17,
+                          ),
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        style: GoogleFonts.alata(
+                          color: Colors.white,
+                          fontSize: 17,
+                        ),
+                      ),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: _marginSize,
+                      ),
+                    ),
+                  ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                  color: Color(0xff1E1E1E),
+                ),
+                margin: EdgeInsets.all(_marginSize),
               ),
-              TextField(
-                controller: _textController,
-              ),
-              ElevatedButton(
-                child: const Text('Avvia chat'),
-                onPressed: () async {
-                  // instatiate reference of Realtime Database
-                  final DatabaseReference ref = FirebaseDatabase.instance.ref();
-
-                  String chatKey = user['uid'] + widget.senderData['uid'];
-
-                  // check if chat already exists
-                  await ref.child('chats').get().then((snapshot) async {
-                    // fetch all chats
-                    dynamic _allChatsMap = snapshot.value;
-
-                    await _allChatsMap.forEach((key, value) {
-                      // check if users are involved in each chat
-                      if (key.contains(user['uid']) &&
-                          key.contains(widget.senderData['uid'])) {
-                        // users are involved
-
-                        // overwrite chatKey with existing chat key
-                        chatKey = key;
-                      }
-                    });
-                  });
-
-                  // upload image
-                  String imageUrl = await uploadImage(_image!);
-
-                  Map chatMap = {
-                    'image': imageUrl,
-                    'text': _textController.text,
-                    'sender': user['uid'],
-                    'sent_at': DateTime.now().toString(),
-                    'recipient': widget.senderData['uid'],
-                  };
-
-                  // upload message to chat
-                  await ref
-                      .child('chats')
-                      .child(chatKey)
-                      .set(chatMap)
-                      .then((value) {
-                    // show successful dialog
+              Container(
+                child: ElevatedButton(
+                  child: const Text('invia messaggio'),
+                  onPressed: () async {
+                    // show loading indicator
                     showDialog(
                       context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Fatto!'),
-                          content: const Text(
-                            'Messaggio inviato con successo!',
-                          ),
-                          actions: <TextButton>[
-                            TextButton(
-                              child: const Text('Ok'),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                          ],
-                        );
+                      builder: (context) {
+                        return const CircularProgressIndicator();
                       },
                     );
-                  });
-                },
+
+                    // instatiate reference of Realtime Database
+                    final DatabaseReference ref =
+                        FirebaseDatabase.instance.ref();
+
+                    String chatKey = user['uid'] + widget.senderData['uid'];
+
+                    // check if chat already exists
+                    await ref.child('chats').get().then((snapshot) async {
+                      // fetch all chats
+                      dynamic _allChatsMap = snapshot.value;
+
+                      await _allChatsMap.forEach((key, value) {
+                        // check if users are involved in each chat
+                        if (key.contains(user['uid']) &&
+                            key.contains(widget.senderData['uid'])) {
+                          // users are involved
+
+                          // overwrite chatKey with existing chat key
+                          chatKey = key;
+                        }
+                      });
+                    });
+
+                    // upload image
+                    String imageUrl = await uploadImage(_image!);
+
+                    Map chatMap = {
+                      'image': imageUrl,
+                      'text': _textController.text,
+                      'sender': user['uid'],
+                      'sent_at': DateTime.now().toString(),
+                      'recipient': widget.senderData['uid'],
+                    };
+
+                    // upload message to chat
+                    await ref
+                        .child('chats')
+                        .child(chatKey)
+                        .set(chatMap)
+                        .then((value) {
+                      // pop loading indicator
+                      Navigator.pop(context);
+
+                      // show successful dialog
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Fatto!'),
+                            content: const Text(
+                              'Messaggio inviato con successo!',
+                            ),
+                            actions: <TextButton>[
+                              TextButton(
+                                child: const Text('Ok'),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    });
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      const Color(0xff63D7C6),
+                    ),
+                    foregroundColor:
+                        MaterialStateProperty.all(const Color(0xff121212)),
+                    textStyle: MaterialStateProperty.all(
+                      GoogleFonts.alata(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+                margin: EdgeInsets.only(
+                  bottom: _marginSize,
+                ),
               ),
             ],
           ),
