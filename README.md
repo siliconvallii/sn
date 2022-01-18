@@ -15,7 +15,6 @@ enhanced communication
 
 ### HomeScreen
 
-* ListView.builder doesn't take full height.
 * RefreshIndicator isn't styled.
 
 ### MyProfileScreen
@@ -24,12 +23,11 @@ enhanced communication
 
 ### NewChatScreen
 
-* "scrivi messaggio..." TextField doesn't have maxLines.
 * When recipient is random, "destinatario..." TextField isn't obscured and isn't disabled.
 
 ### ChatScreen
 
-* "scrivi messaggio..." TextField doesn't have maxLines.
+* When an image is uploaded, SingleChildScrollView scrolls up unexpectedly.
 
 ### SignUpScreen
 
