@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sn/screens/home_screen.dart';
 import 'package:sn/screens/initial_screen.dart';
-import 'package:sn/screens/new_chat_screen.dart';
 import 'package:sn/screens/sign_up_screen.dart';
 
 void main() {
@@ -21,7 +20,6 @@ class SN extends StatelessWidget {
       routes: {
         '/home': (BuildContext context) => const HomeScreen(),
         '/initial': (BuildContext context) => const InitialScreen(),
-        '/new_chat': (BuildContext context) => const NewChatScreen(),
         '/sign_up': (BuildContext context) => const SignUpScreen(),
       },
     );

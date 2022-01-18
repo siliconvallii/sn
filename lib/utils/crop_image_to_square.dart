@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 Future<File?> cropImageToSquare(XFile image) async {
   File? croppedImage = await ImageCropper.cropImage(
     sourcePath: image.path,
-    aspectRatio: CropAspectRatio(
+    aspectRatio: const CropAspectRatio(
       ratioX: 1,
       ratioY: 1,
     ),

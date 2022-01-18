@@ -7,8 +7,6 @@ class InitialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _imageSize = MediaQuery.of(context).size.width * 0.7;
-
     return Scaffold(
       backgroundColor: const Color(0xff121212),
       body: SafeArea(
