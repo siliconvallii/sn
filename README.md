@@ -2,6 +2,11 @@
 
 enhanced communication
 
+## New features that'll be added
+
+* Apple sign-in
+* SearchScreen
+
 ## Known issues
 
 ### General
