@@ -53,51 +53,54 @@ class UserHasToReplyCard extends StatelessWidget {
                         );
                       },
                     ),
-                    InkWell(
-                      child: Container(
-                        child: Column(
-                          children: [
-                            Text(
-                              snapshot.data['username'],
-                              style: GoogleFonts.alata(
-                                color: Colors.white,
-                                fontSize: 17,
+                    Expanded(
+                      child: InkWell(
+                        child: Container(
+                          child: Column(
+                            children: [
+                              Text(
+                                snapshot.data['username'],
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.alata(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'ti ha scritto ' +
-                                  DateTime.now()
-                                      .difference(
-                                          DateTime.parse(chatData['sent_at']))
-                                      .inHours
-                                      .toString() +
-                                  ' ore fa',
-                              style: GoogleFonts.alata(
-                                color: Colors.grey,
-                                fontSize: 14,
+                              Text(
+                                'ti ha scritto ' +
+                                    DateTime.now()
+                                        .difference(
+                                            DateTime.parse(chatData['sent_at']))
+                                        .inHours
+                                        .toString() +
+                                    ' ore fa',
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.alata(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
-                          ],
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        ),
-                        margin: const EdgeInsets.only(
-                          left: 10,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => ChatScreen(
-                              chatData: chatData,
-                              senderData: snapshot.data,
-                            ),
+                            ],
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           ),
-                        );
-                      },
+                          margin: const EdgeInsets.only(
+                            left: 10,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => ChatScreen(
+                                chatData: chatData,
+                                senderData: snapshot.data,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                    const Spacer(),
                     InkWell(
                       child: SizedBox(
                         child: Container(

@@ -51,35 +51,39 @@ class UserRepliedCard extends StatelessWidget {
                         );
                       },
                     ),
-                    Container(
-                      child: Column(
-                        children: [
-                          Text(
-                            snapshot.data['username'],
-                            style: GoogleFonts.alata(
-                              color: Colors.white,
-                              fontSize: 17,
+                    Expanded(
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Text(
+                              snapshot.data['username'],
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.alata(
+                                color: Colors.white,
+                                fontSize: 17,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'hai risposto ' +
-                                DateTime.now()
-                                    .difference(
-                                        DateTime.parse(chatData['sent_at']))
-                                    .inHours
-                                    .toString() +
-                                ' ore fa',
-                            style: GoogleFonts.alata(
-                              color: Colors.grey,
-                              fontSize: 14,
+                            Text(
+                              'hai risposto ' +
+                                  DateTime.now()
+                                      .difference(
+                                          DateTime.parse(chatData['sent_at']))
+                                      .inHours
+                                      .toString() +
+                                  ' ore fa',
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.alata(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              ),
                             ),
-                          ),
-                        ],
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      ),
-                      margin: const EdgeInsets.only(
-                        left: 10,
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ),
+                        margin: const EdgeInsets.only(
+                          left: 10,
+                        ),
                       ),
                     ),
                   ],
