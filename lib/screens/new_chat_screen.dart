@@ -90,12 +90,14 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                     controller: _recipientController,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
+                                      counterText: '',
                                       hintText: 'destinatario...',
                                       hintStyle: GoogleFonts.alata(
                                         color: Colors.grey,
                                         fontSize: 17,
                                       ),
                                     ),
+                                    maxLength: 50,
                                     style: GoogleFonts.alata(
                                       color: Colors.white,
                                       fontSize: 17,
@@ -202,6 +204,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                         controller: _textController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
+                          counterText: '',
                           hintText: 'scrivi messaggio...',
                           hintStyle: GoogleFonts.alata(
                             color: Colors.grey,
@@ -209,6 +212,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                           ),
                         ),
                         keyboardType: TextInputType.multiline,
+                        maxLength: 500,
                         maxLines: null,
                         style: GoogleFonts.alata(
                           color: Colors.white,

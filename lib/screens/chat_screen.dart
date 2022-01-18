@@ -269,6 +269,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         controller: _textController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
+                          counterText: '',
                           hintText: 'scrivi messaggio...',
                           hintStyle: GoogleFonts.alata(
                             color: Colors.grey,
@@ -276,6 +277,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         ),
                         keyboardType: TextInputType.multiline,
+                        maxLength: 500,
                         maxLines: null,
                         style: GoogleFonts.alata(
                           color: Colors.white,
