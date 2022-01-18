@@ -67,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? Text(snapshot.error.toString())
                           // snapshot has data
                           : ListView.builder(
-                              shrinkWrap: true,
                               itemCount: snapshot.data.length,
                               itemBuilder: (BuildContext context, int index) {
                                 if (snapshot.data![index]['sender'] ==
