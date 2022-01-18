@@ -325,9 +325,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       context: context,
                     );
 
-                    // pop loading indicator
-                    Navigator.pop(context);
-
                     // create profile & navigate to HomeScreen
                     createProfile(
                       context,
@@ -336,6 +333,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       _secondDropdownValue,
                       _textController.text,
                     );
+
+                    // pop loading indicator
+                    Navigator.pop(context);
                   }
                 },
                 style: ButtonStyle(
