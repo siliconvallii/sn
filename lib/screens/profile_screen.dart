@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sn/providers/fetch_if_friends.dart';
+import 'package:sn/screens/new_chat_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final Map profile;
@@ -134,7 +135,19 @@ class ProfileScreen extends StatelessWidget {
                                     snapshot.data == false
                                         ? ElevatedButton(
                                             child: const Text('avvia chat'),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          NewChatScreen(
+                                                    recipientUsername:
+                                                        profile['username'],
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                             style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all(

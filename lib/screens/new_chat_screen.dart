@@ -11,7 +11,10 @@ import 'package:sn/utils/pick_image.dart';
 import 'package:sn/utils/take_image.dart';
 
 class NewChatScreen extends StatefulWidget {
-  const NewChatScreen({Key? key}) : super(key: key);
+  const NewChatScreen({required this.recipientUsername, Key? key})
+      : super(key: key);
+
+  final String recipientUsername;
 
   @override
   State<NewChatScreen> createState() => _NewChatScreenState();
@@ -27,6 +30,8 @@ class _NewChatScreenState extends State<NewChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _recipientController.text = widget.recipientUsername;
+
     double _marginSize = MediaQuery.of(context).size.width * 0.03;
 
     return Scaffold(
@@ -102,9 +107,9 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.person_search,
-                                  color: const Color(0xffBC91F8),
+                                  color: Color(0xffBC91F8),
                                 ),
                                 onPressed: () async {
                                   Map randomUser = await fetchRandomUser();
@@ -305,7 +310,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                       // check if user was found
                       if (recipientData['uid'] == null) {
                         // user wasn't found
-                        print('debug');
+
                         // pop loading indicator
                         Navigator.pop(context);
 
