@@ -54,8 +54,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     _passwordController.text,
                   );
 
-
-
                   // check if email is verified
                   if (FirebaseAuth.instance.currentUser!.emailVerified) {
                     // email is verified
