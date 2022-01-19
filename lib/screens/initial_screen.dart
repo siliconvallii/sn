@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sn/providers/silent_email_sign_in.dart';
+import 'package:sn/utils/fetch_data.dart';
 
 class InitialScreen extends StatelessWidget {
   const InitialScreen({Key? key}) : super(key: key);
@@ -28,7 +30,19 @@ class InitialScreen extends StatelessWidget {
       ),
       floatingActionButton: ElevatedButton(
         child: const Text('accedi'),
-        onPressed: () => Navigator.pushNamed(context, '/sign_in'),
+        onPressed: () async {
+          Map userData = await fetchData(context);
+
+          if (userData['email'] != '' && userData['password'] != '') {
+            await silentEmailSignIn(
+              context,
+              userData['email'],
+              userData['password'],
+            );
+          } else {
+            Navigator.pushNamed(context, '/sign_in');
+          }
+        },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(
             const Color(0xff63D7C6),
