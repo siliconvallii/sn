@@ -38,7 +38,7 @@ Future emailSignIn(BuildContext context, String email, String password) async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
       prefs.setString('email', email);
-      prefs.setString('email', password);
+      prefs.setString('password', password);
 
       // pop loading indicator
       Navigator.pop(context);
