@@ -20,6 +20,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double _marginSize = MediaQuery.of(context).size.width * 0.03;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xff2E2E2E),
@@ -30,15 +32,103 @@ class _SignInScreenState extends State<SignInScreen> {
           style: GoogleFonts.alata(),
         ),
       ),
+      backgroundColor: const Color(0xff121212),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              TextField(
-                controller: _emailController,
+              Container(
+                child: TextField(
+                  controller: _emailController,
+                  cursorColor: const Color(0xffBC91F8),
+                  decoration: InputDecoration(
+                    border: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.zero,
+                    counterText: '',
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    hintText: 'email',
+                    hintStyle: GoogleFonts.alata(
+                      color: Colors.grey,
+                      fontSize: 17,
+                    ),
+                  ),
+                  keyboardType: TextInputType.text,
+                  maxLength: 50,
+                  style: GoogleFonts.alata(
+                    color: Colors.white,
+                    fontSize: 17,
+                  ),
+                ),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Color(0xff1E1E1E),
+                ),
+                margin: EdgeInsets.only(
+                  left: _marginSize,
+                  right: _marginSize,
+                  top: _marginSize,
+                ),
+                padding: const EdgeInsets.all(10),
               ),
-              TextField(
-                controller: _passwordController,
+              Container(
+                child: TextField(
+                  controller: _passwordController,
+                  cursorColor: const Color(0xffBC91F8),
+                  decoration: InputDecoration(
+                    border: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.zero,
+                    counterText: '',
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    hintText: 'password',
+                    hintStyle: GoogleFonts.alata(
+                      color: Colors.grey,
+                      fontSize: 17,
+                    ),
+                  ),
+                  keyboardType: TextInputType.text,
+                  maxLength: 50,
+                  obscureText: true,
+                  style: GoogleFonts.alata(
+                    color: Colors.white,
+                    fontSize: 17,
+                  ),
+                ),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Color(0xff1E1E1E),
+                ),
+                margin: EdgeInsets.only(
+                  left: _marginSize,
+                  right: _marginSize,
+                  top: _marginSize,
+                ),
+                padding: const EdgeInsets.all(10),
               ),
               ElevatedButton(
                 child: const Text('registrati'),
@@ -112,6 +202,18 @@ class _SignInScreenState extends State<SignInScreen> {
                     );
                   }
                 },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color(0xff63D7C6),
+                  ),
+                  foregroundColor:
+                      MaterialStateProperty.all(const Color(0xff121212)),
+                  textStyle: MaterialStateProperty.all(
+                    GoogleFonts.alata(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
               ),
               ElevatedButton(
                 child: const Text('accedi'),
@@ -189,6 +291,18 @@ class _SignInScreenState extends State<SignInScreen> {
                     );
                   }
                 },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color(0xff63D7C6),
+                  ),
+                  foregroundColor:
+                      MaterialStateProperty.all(const Color(0xff121212)),
+                  textStyle: MaterialStateProperty.all(
+                    GoogleFonts.alata(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
