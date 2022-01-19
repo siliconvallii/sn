@@ -24,8 +24,6 @@ class _NewChatScreenState extends State<NewChatScreen> {
   final TextEditingController _recipientController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
 
-  final String _templateImageUrl =
-      'https://img.myloview.it/quadri/upload-vector-icon-cloud-storage-symbol-upload-to-cloud-icon-modern-simple-line-style-vector-illustration-for-web-site-or-mobile-app-700-176322192.jpg';
   File? _image;
 
   @override
@@ -61,14 +59,14 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                 TextSpan(
                                   text: 'da: ',
                                   style: GoogleFonts.alata(
-                                    color: Colors.grey,
+                                    color: Colors.white,
                                     fontSize: 17,
                                   ),
                                 ),
                                 TextSpan(
                                   text: user['username'],
                                   style: GoogleFonts.alata(
-                                    color: Colors.white,
+                                    color: Colors.grey,
                                     fontSize: 17,
                                   ),
                                 ),
@@ -80,7 +78,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                               Text(
                                 'a: ',
                                 style: GoogleFonts.alata(
-                                  color: Colors.grey,
+                                  color: Colors.white,
                                   fontSize: 17,
                                 ),
                               ),
@@ -88,9 +86,25 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                 child: Container(
                                   child: TextField(
                                     controller: _recipientController,
+                                    cursorColor: const Color(0xffBC91F8),
                                     decoration: InputDecoration(
-                                      border: InputBorder.none,
+                                      border: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      contentPadding: EdgeInsets.zero,
                                       counterText: '',
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      focusedBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                                       hintText: 'destinatario...',
                                       hintStyle: GoogleFonts.alata(
                                         color: Colors.grey,
@@ -143,6 +157,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                 },
                               ),
                             ],
+                            crossAxisAlignment: CrossAxisAlignment.center,
                           ),
                         ],
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,9 +167,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                       ),
                     ),
                     SizedBox(
-                      child: _image == null
-                          ? Image.network(_templateImageUrl)
-                          : Image.file(_image!),
+                      child: _image == null ? Container() : Image.file(_image!),
                       width: double.infinity,
                     ),
                     TextButton(
@@ -202,9 +215,24 @@ class _NewChatScreenState extends State<NewChatScreen> {
                     Container(
                       child: TextField(
                         controller: _textController,
+                        cursorColor: const Color(0xffBC91F8),
                         decoration: InputDecoration(
-                          border: InputBorder.none,
+                          border: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
                           counterText: '',
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
                           hintText: 'scrivi messaggio...',
                           hintStyle: GoogleFonts.alata(
                             color: Colors.grey,
@@ -219,8 +247,10 @@ class _NewChatScreenState extends State<NewChatScreen> {
                           fontSize: 17,
                         ),
                       ),
-                      margin: EdgeInsets.symmetric(
-                        horizontal: _marginSize,
+                      margin: EdgeInsets.only(
+                        bottom: _marginSize,
+                        left: _marginSize,
+                        right: _marginSize,
                       ),
                     ),
                   ],

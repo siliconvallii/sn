@@ -59,14 +59,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                 TextSpan(
                                   text: 'da: ',
                                   style: GoogleFonts.alata(
-                                    color: Colors.grey,
+                                    color: Colors.white,
                                     fontSize: 17,
                                   ),
                                 ),
                                 TextSpan(
                                   text: widget.senderData['username'],
                                   style: GoogleFonts.alata(
-                                    color: Colors.white,
+                                    color: Colors.grey,
                                     fontSize: 17,
                                   ),
                                 ),
@@ -79,14 +79,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                 TextSpan(
                                   text: 'a: ',
                                   style: GoogleFonts.alata(
-                                    color: Colors.grey,
+                                    color: Colors.white,
                                     fontSize: 17,
                                   ),
                                 ),
                                 TextSpan(
                                   text: user['username'],
                                   style: GoogleFonts.alata(
-                                    color: Colors.white,
+                                    color: Colors.grey,
                                     fontSize: 17,
                                   ),
                                 )
@@ -143,7 +143,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Text(
                   'rispondi a ${widget.senderData['username']}',
                   style: GoogleFonts.alata(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontSize: 17,
                   ),
                 ),
@@ -163,14 +163,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                 TextSpan(
                                   text: 'da: ',
                                   style: GoogleFonts.alata(
-                                    color: Colors.grey,
+                                    color: Colors.white,
                                     fontSize: 17,
                                   ),
                                 ),
                                 TextSpan(
                                   text: user['username'],
                                   style: GoogleFonts.alata(
-                                    color: Colors.white,
+                                    color: Colors.grey,
                                     fontSize: 17,
                                   ),
                                 ),
@@ -183,14 +183,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                 TextSpan(
                                   text: 'a: ',
                                   style: GoogleFonts.alata(
-                                    color: Colors.grey,
+                                    color: Colors.white,
                                     fontSize: 17,
                                   ),
                                 ),
                                 TextSpan(
                                   text: widget.senderData['username'],
                                   style: GoogleFonts.alata(
-                                    color: Colors.white,
+                                    color: Colors.grey,
                                     fontSize: 17,
                                   ),
                                 )
@@ -205,21 +205,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                     SizedBox(
-                      child: _image == null
-                          ? CachedNetworkImage(
-                              fit: BoxFit.fill,
-                              errorWidget: (BuildContext context, String url,
-                                      dynamic error) =>
-                                  const Icon(Icons.error),
-                              imageUrl: _templateImageUrl,
-                              placeholder: (BuildContext context, String url) =>
-                                  const Center(
-                                child: CircularProgressIndicator(
-                                  color: Color(0xffBC91F8),
-                                ),
-                              ),
-                            )
-                          : Image.file(_image!),
+                      child: _image == null ? Container() : Image.file(_image!),
                       width: double.infinity,
                     ),
                     TextButton(
@@ -267,9 +253,24 @@ class _ChatScreenState extends State<ChatScreen> {
                     Container(
                       child: TextField(
                         controller: _textController,
+                        cursorColor: const Color(0xffBC91F8),
                         decoration: InputDecoration(
-                          border: InputBorder.none,
+                          border: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
                           counterText: '',
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
                           hintText: 'scrivi messaggio...',
                           hintStyle: GoogleFonts.alata(
                             color: Colors.grey,
