@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sn/screens/modify_profile_screen.dart';
+import 'package:sn/screens/settings_screen.dart';
 
 class MyProfileScreen extends StatelessWidget {
   final Map profile;
@@ -14,6 +15,19 @@ class MyProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(),
+                ),
+              );
+            },
+          ),
+        ],
         backgroundColor: const Color(0xff2E2E2E),
         centerTitle: true,
         elevation: 0,
