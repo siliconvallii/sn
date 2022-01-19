@@ -24,10 +24,10 @@ class _NewChatScreenState extends State<NewChatScreen> {
   final TextEditingController _recipientController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
 
+  File? _image;
+
   @override
   Widget build(BuildContext context) {
-    File? _image;
-
     double _marginSize = MediaQuery.of(context).size.width * 0.03;
 
     return Scaffold(
@@ -167,7 +167,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                       ),
                     ),
                     SizedBox(
-                      child: _image == null ? Container() : Image.file(_image),
+                      child: _image == null ? Container() : Image.file(_image!),
                       width: double.infinity,
                     ),
                     TextButton(
@@ -241,7 +241,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                           ),
                         ),
                         keyboardType: TextInputType.multiline,
-                        maxLength: 500,
+                        maxLength: 200,
                         maxLines: null,
                         style: GoogleFonts.alata(
                           color: Colors.white,

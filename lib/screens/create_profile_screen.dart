@@ -255,7 +255,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           ),
                         ),
                         keyboardType: TextInputType.multiline,
-                        maxLength: 500,
+                        maxLength: 200,
                         maxLines: null,
                         style: GoogleFonts.alata(
                           color: Colors.white,
