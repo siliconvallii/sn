@@ -4,7 +4,6 @@ enhanced communication
 
 ## New features that'll be added
 
-* Apple sign-in
 * SearchScreen
 
 ## Known issues
@@ -28,7 +27,3 @@ enhanced communication
 ### ChatScreen
 
 * When an image is uploaded, SingleChildScrollView scrolls up unexpectedly.
-
-### SignUpScreen
-
-* There is no loading indicator when "completa registrazione" ElevatedButton is pressed.
