@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future emailSignIn(BuildContext context, String email, String password) async {
   // dismiss keyboard
@@ -32,6 +33,12 @@ Future emailSignIn(BuildContext context, String email, String password) async {
         email: email,
         password: password,
       );
+
+      // store locally email & password
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      prefs.setString('email', email);
+      prefs.setString('email', password);
 
       // pop loading indicator
       Navigator.pop(context);
