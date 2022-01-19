@@ -285,8 +285,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           fontSize: 17,
                         ),
                       ),
-                      margin: EdgeInsets.symmetric(
-                        horizontal: _marginSize,
+                      margin: EdgeInsets.only(
+                        bottom: _marginSize,
+                        left: _marginSize,
+                        right: _marginSize,
                       ),
                     ),
                   ],
