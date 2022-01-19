@@ -182,6 +182,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                     });
                   } else {
+                    // send verification email
+                    await FirebaseAuth.instance.currentUser!
+                        .sendEmailVerification();
+
                     // show error dialog
                     showDialog(
                       context: context,
