@@ -22,15 +22,12 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xff2E2E2E),
         centerTitle: true,
         elevation: 0,
         title: Text(
           'accedi',
-          style: GoogleFonts.alata(
-            fontSize: 24,
-          ),
+          style: GoogleFonts.alata(),
         ),
       ),
       body: SafeArea(
@@ -56,6 +53,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     _emailController.text,
                     _passwordController.text,
                   );
+
+
 
                   // check if email is verified
                   if (FirebaseAuth.instance.currentUser!.emailVerified) {
