@@ -5,7 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sn/providers/sign_in.dart';
+import 'package:sn/data/user_data.dart';
 import 'package:sn/providers/upload_image.dart';
 import 'package:sn/utils/crop_image_to_square.dart';
 import 'package:sn/utils/pick_image.dart';

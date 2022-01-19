@@ -2,8 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-Map user = {};
+import 'package:sn/data/user_data.dart';
 
 void signIn(BuildContext context) async {
   // fetch Google user
@@ -41,7 +40,7 @@ void signIn(BuildContext context) async {
       };
 
       // navigate to SignUpScreen
-      Navigator.pushNamed(context, '/sign_up');
+      Navigator.pushNamed(context, '/create_profile');
     } else {
       // user isn't new
 

@@ -7,14 +7,21 @@ import 'package:sn/utils/crop_image_to_square.dart';
 import 'package:sn/utils/pick_image.dart';
 import 'package:sn/utils/take_image.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class CreateProfileScreen extends StatefulWidget {
+  const CreateProfileScreen({
+    required this.username,
+    required this.uid,
+    Key? key,
+  }) : super(key: key);
+
+  final String username;
+  final String uid;
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<CreateProfileScreen> createState() => _CreateProfileScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _CreateProfileScreenState extends State<CreateProfileScreen> {
   String _dropdownValue = 'I';
   String _secondDropdownValue = 'A';
 
@@ -311,31 +318,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                     );
                   } else {
-                    // dismiss keyboard
-                    FocusManager.instance.primaryFocus?.unfocus();
-
-                    // show loading indicator
-                    showDialog(
-                      barrierDismissible: false,
-                      builder: (context) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                      context: context,
-                    );
-
                     // create profile & navigate to HomeScreen
                     createProfile(
                       context,
+                      widget.username,
+                      widget.uid,
                       _profileImage,
                       _dropdownValue,
                       _secondDropdownValue,
                       _textController.text,
                     );
-
-                    // pop loading indicator
-                    Navigator.pop(context);
                   }
                 },
                 style: ButtonStyle(

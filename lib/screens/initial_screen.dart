@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sn/providers/sign_in.dart';
 
 class InitialScreen extends StatelessWidget {
   const InitialScreen({Key? key}) : super(key: key);
@@ -28,8 +27,8 @@ class InitialScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: ElevatedButton(
-        child: const Text('entra con Google'),
-        onPressed: () => signIn(context),
+        child: const Text('accedi'),
+        onPressed: () => Navigator.pushNamed(context, '/sign_in'),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(
             const Color(0xff63D7C6),

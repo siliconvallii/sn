@@ -1,11 +1,27 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:sn/providers/sign_in.dart';
+import 'package:sn/data/user_data.dart';
 import 'package:uuid/uuid.dart';
 
-void createProfile(
-    context, profilePicture, classValue, sectionValue, bioString) async {
+void createProfile(context, username, uid, profilePicture, classValue,
+    sectionValue, bioString) async {
+  // dismiss keyboard
+  FocusManager.instance.primaryFocus?.unfocus();
+
+  // show loading indicator
+  showDialog(
+    barrierDismissible: false,
+    builder: (context) {
+      return const Center(
+        child: CircularProgressIndicator(
+          color: Color(0xffBC91F8),
+        ),
+      );
+    },
+    context: context,
+  );
+
   // generate random image id
   String imageId = const Uuid().v4();
 
@@ -22,6 +38,8 @@ void createProfile(
       .then((_imageURL) => profilePictureUrl = _imageURL);
 
   // update locally stored user map
+  user['username'] = username;
+  user['uid'] = uid;
   user['profile_picture'] = profilePictureUrl;
   user['class'] = classValue;
   user['section'] = sectionValue;
@@ -33,6 +51,9 @@ void createProfile(
 
   // create or update user in Realtime Database
   await ref.child('users').child(user['uid']).set(user);
+
+  // pop loading indicator
+  Navigator.pop(context);
 
   // navigate to HomeScreen
   Navigator.pushNamed(context, '/home');

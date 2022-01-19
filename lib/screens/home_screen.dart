@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sn/data/user_data.dart';
 import 'package:sn/providers/fetch_chats.dart';
-import 'package:sn/providers/sign_in.dart';
 import 'package:sn/screens/my_profile_screen.dart';
 import 'package:sn/widgets/start_chat_button.dart';
 import 'package:sn/widgets/user_has_to_reply_card.dart';

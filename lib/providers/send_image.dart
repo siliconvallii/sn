@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:sn/providers/sign_in.dart';
+import 'package:sn/data/user_data.dart';
 
 void sendImage(String imageUrl, String recipient) async {
   // instatiate reference of Realtime Database
