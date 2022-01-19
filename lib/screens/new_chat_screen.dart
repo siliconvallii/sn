@@ -24,11 +24,9 @@ class _NewChatScreenState extends State<NewChatScreen> {
   final TextEditingController _recipientController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
 
-  File? _image;
-
   @override
   Widget build(BuildContext context) {
-    _recipientController.text = widget.recipientUsername;
+    File? _image;
 
     double _marginSize = MediaQuery.of(context).size.width * 0.03;
 
@@ -111,6 +109,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                         fontSize: 17,
                                       ),
                                     ),
+                                    keyboardType: TextInputType.text,
                                     maxLength: 50,
                                     style: GoogleFonts.alata(
                                       color: Colors.white,
@@ -129,6 +128,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                 ),
                                 onPressed: () async {
                                   Map randomUser = await fetchRandomUser();
+
                                   if (randomUser['uid'] == 'example') {
                                     // random user not found
                                     showDialog(
@@ -167,7 +167,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                       ),
                     ),
                     SizedBox(
-                      child: _image == null ? Container() : Image.file(_image!),
+                      child: _image == null ? Container() : Image.file(_image),
                       width: double.infinity,
                     ),
                     TextButton(
@@ -222,6 +222,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                               color: Colors.grey,
                             ),
                           ),
+                          contentPadding: EdgeInsets.zero,
                           counterText: '',
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
