@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future emailSignIn(BuildContext context, String email, String password) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
   // dismiss keyboard
   FocusManager.instance.primaryFocus?.unfocus();
 
@@ -35,8 +37,6 @@ Future emailSignIn(BuildContext context, String email, String password) async {
       );
 
       // store locally email & password
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-
       prefs.setString('email', email);
       prefs.setString('password', password);
 
@@ -47,6 +47,10 @@ Future emailSignIn(BuildContext context, String email, String password) async {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         // user not found
+
+        // clear data store locally
+        prefs.remove('email');
+        prefs.remove('password');
 
         // pop loading indicator
         Navigator.pop(context);
@@ -71,6 +75,10 @@ Future emailSignIn(BuildContext context, String email, String password) async {
         );
       } else if (e.code == 'wrong-password') {
         // password is wrong
+
+        // clear data store locally
+        prefs.remove('email');
+        prefs.remove('password');
 
         // pop loading indicator
         Navigator.pop(context);
@@ -97,6 +105,10 @@ Future emailSignIn(BuildContext context, String email, String password) async {
     } catch (e) {
       // unknown error
 
+      // clear data store locally
+      prefs.remove('email');
+      prefs.remove('password');
+
       // pop loading indicator
       Navigator.pop(context);
 
@@ -119,6 +131,10 @@ Future emailSignIn(BuildContext context, String email, String password) async {
     }
   } else {
     // email isn't allowed
+
+    // clear data store locally
+    prefs.remove('email');
+    prefs.remove('password');
 
     // pop loading indicator
     Navigator.pop(context);
