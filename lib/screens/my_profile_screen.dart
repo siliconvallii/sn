@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sn/screens/modify_profile_screen.dart';
 
 class MyProfileScreen extends StatelessWidget {
   final Map profile;
@@ -118,7 +119,15 @@ class MyProfileScreen extends StatelessWidget {
                         ),
                         ElevatedButton(
                           child: const Text('modifica profilo'),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ModifyProfileScreen(profile: profile),
+                              ),
+                            );
+                          },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
                               const Color(0xffBC91F8),
