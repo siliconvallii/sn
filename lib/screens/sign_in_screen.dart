@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -133,67 +134,96 @@ class _SignInScreenState extends State<SignInScreen> {
               ElevatedButton(
                 child: const Text('registrati'),
                 onPressed: () async {
-                  // fetch username
-                  List emailStrings = _emailController.text.split('@');
-                  String username = emailStrings[0];
+                  // validate email
+                  bool isEmailValid =
+                      EmailValidator.validate(_emailController.text);
 
-                  // sign-in user
-                  UserCredential userCredential = await emailSignUp(
-                    context,
-                    _emailController.text,
-                    _passwordController.text,
-                  );
+                  if (isEmailValid) {
+                    // email is valid
 
-                  // check if email is verified
-                  if (FirebaseAuth.instance.currentUser!.emailVerified) {
-                    // email is verified
+                    // fetch username
+                    List emailStrings = _emailController.text.split('@');
+                    String username = emailStrings[0];
 
-                    // instatiate reference of Realtime Database
-                    final DatabaseReference ref =
-                        FirebaseDatabase.instance.ref();
+                    // sign-in user
+                    UserCredential userCredential = await emailSignUp(
+                      context,
+                      _emailController.text,
+                      _passwordController.text,
+                    );
 
-                    await ref
-                        .child('users')
-                        .child(userCredential.user!.uid)
-                        .get()
-                        .then((value) {
-                      // check if user is new
-                      if (value.exists) {
-                        // user isn't new
+                    // check if email is verified
+                    if (FirebaseAuth.instance.currentUser!.emailVerified) {
+                      // email is verified
 
-                        // store user Map locally
-                        user = value.value;
+                      // instatiate reference of Realtime Database
+                      final DatabaseReference ref =
+                          FirebaseDatabase.instance.ref();
 
-                        // navigate to HomeScreen
-                        Navigator.pushNamed(context, '/home');
-                      } else {
-                        // user is new
+                      await ref
+                          .child('users')
+                          .child(userCredential.user!.uid)
+                          .get()
+                          .then((value) {
+                        // check if user is new
+                        if (value.exists) {
+                          // user isn't new
 
-                        // navigate to CreateProfileScreen
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateProfileScreen(
-                              username: username,
-                              uid: userCredential.user!.uid,
+                          // store user Map locally
+                          user = value.value;
+
+                          // navigate to HomeScreen
+                          Navigator.pushNamed(context, '/home');
+                        } else {
+                          // user is new
+
+                          // navigate to CreateProfileScreen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateProfileScreen(
+                                username: username,
+                                uid: userCredential.user!.uid,
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                    });
+                          );
+                        }
+                      });
+                    } else {
+                      // send verification email
+                      await FirebaseAuth.instance.currentUser!
+                          .sendEmailVerification();
+
+                      // show error dialog
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('fatto!'),
+                            content: const Text(
+                              'account creato! ora devi verificare la tua email per continuare',
+                            ),
+                            actions: <TextButton>[
+                              TextButton(
+                                child: const Text('ok'),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   } else {
-                    // send verification email
-                    await FirebaseAuth.instance.currentUser!
-                        .sendEmailVerification();
+                    // email is not valid
 
                     // show error dialog
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('fatto!'),
+                          title: const Text('errore!'),
                           content: const Text(
-                            'account creato! ora devi verificare la tua email per continuare',
+                            'l\'email che hai inserito non è valida',
                           ),
                           actions: <TextButton>[
                             TextButton(
@@ -222,58 +252,87 @@ class _SignInScreenState extends State<SignInScreen> {
               ElevatedButton(
                 child: const Text('accedi'),
                 onPressed: () async {
-                  // fetch username
-                  List emailStrings = _emailController.text.split('@');
-                  String username = emailStrings[0];
+                  // validate email
+                  bool isEmailValid =
+                      EmailValidator.validate(_emailController.text);
 
-                  // sign-in user
-                  UserCredential userCredential = await emailSignIn(
-                    context,
-                    _emailController.text,
-                    _passwordController.text,
-                  );
+                  if (isEmailValid) {
+                    // email is valid
 
-                  // check if email is verified
-                  if (FirebaseAuth.instance.currentUser!.emailVerified) {
-                    // email is verified
+                    // fetch username
+                    List emailStrings = _emailController.text.split('@');
+                    String username = emailStrings[0];
 
-                    // instatiate reference of Realtime Database
-                    final DatabaseReference ref =
-                        FirebaseDatabase.instance.ref();
+                    // sign-in user
+                    UserCredential userCredential = await emailSignIn(
+                      context,
+                      _emailController.text,
+                      _passwordController.text,
+                    );
 
-                    await ref
-                        .child('users')
-                        .child(userCredential.user!.uid)
-                        .get()
-                        .then((value) {
-                      // check if user is new
-                      if (value.exists) {
-                        // user isn't new
+                    // check if email is verified
+                    if (FirebaseAuth.instance.currentUser!.emailVerified) {
+                      // email is verified
 
-                        // store user Map locally
-                        user = value.value;
+                      // instatiate reference of Realtime Database
+                      final DatabaseReference ref =
+                          FirebaseDatabase.instance.ref();
 
-                        // navigate to HomeScreen
-                        Navigator.pushNamed(context, '/home');
-                      } else {
-                        // user is new
+                      await ref
+                          .child('users')
+                          .child(userCredential.user!.uid)
+                          .get()
+                          .then((value) {
+                        // check if user is new
+                        if (value.exists) {
+                          // user isn't new
 
-                        // navigate to CreateProfileScreen
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateProfileScreen(
-                              username: username,
-                              uid: userCredential.user!.uid,
+                          // store user Map locally
+                          user = value.value;
+
+                          // navigate to HomeScreen
+                          Navigator.pushNamed(context, '/home');
+                        } else {
+                          // user is new
+
+                          // navigate to CreateProfileScreen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateProfileScreen(
+                                username: username,
+                                uid: userCredential.user!.uid,
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                    });
+                          );
+                        }
+                      });
+                    } else {
+                      // email isn't verified
+                      await FirebaseAuth.instance.currentUser!
+                          .sendEmailVerification();
+
+                      // show error dialog
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('errore!'),
+                            content: const Text(
+                              'devi verificare la tua email per continuare',
+                            ),
+                            actions: <TextButton>[
+                              TextButton(
+                                child: const Text('ok'),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   } else {
-                    // email isn't verified
-                    await FirebaseAuth.instance.currentUser!
-                        .sendEmailVerification();
+                    // email is not valid
 
                     // show error dialog
                     showDialog(
@@ -282,7 +341,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         return AlertDialog(
                           title: const Text('errore!'),
                           content: const Text(
-                            'devi verificare la tua email per continuare',
+                            'l\'email che hai inserito non è valida',
                           ),
                           actions: <TextButton>[
                             TextButton(
