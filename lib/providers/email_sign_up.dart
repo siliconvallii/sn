@@ -2,6 +2,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 Future emailSignUp(BuildContext context, String email, String password) async {
+  // dismiss keyboard
+  FocusManager.instance.primaryFocus?.unfocus();
+
+  // show loading indicator
+  showDialog(
+    barrierDismissible: false,
+    builder: (context) {
+      return const Center(
+        child: CircularProgressIndicator(
+          color: Color(0xffBC91F8),
+        ),
+      );
+    },
+    context: context,
+  );
+
   // fetch email domain
   List<String> emailStrings = email.split('@');
   String emailDomain = emailStrings[1];
@@ -17,10 +33,16 @@ Future emailSignUp(BuildContext context, String email, String password) async {
         password: password,
       );
 
+      // pop loading indicator
+      Navigator.pop(context);
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         // password is weak
+
+        // pop loading indicator
+        Navigator.pop(context);
 
         // show error dialog
         showDialog(
@@ -43,6 +65,9 @@ Future emailSignUp(BuildContext context, String email, String password) async {
       } else if (e.code == 'email-already-in-use') {
         // account already exists
 
+        // pop loading indicator
+        Navigator.pop(context);
+
         // show error dialog
         showDialog(
           context: context,
@@ -63,6 +88,11 @@ Future emailSignUp(BuildContext context, String email, String password) async {
         );
       }
     } catch (e) {
+      // unknown error
+
+      // pop loading indicator
+      Navigator.pop(context);
+
       // show error dialog
       showDialog(
         context: context,
@@ -82,6 +112,9 @@ Future emailSignUp(BuildContext context, String email, String password) async {
     }
   } else {
     // email isn't allowed
+
+    // pop loading indicator
+    Navigator.pop(context);
 
     // show error dialog
     showDialog(
