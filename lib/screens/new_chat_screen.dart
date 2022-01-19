@@ -402,6 +402,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                       } else {
                         // user was found
 
+                        bool chatExists = false;
                         String chatKey = user['uid'] + recipientData['uid'];
 
                         // check if chat already exists
@@ -415,73 +416,79 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                 key.contains(recipientData['uid'])) {
                               // users are involved
 
-                              // overwrite chatKey with existing chat key
-                              chatKey = key;
+                              chatExists = true;
                             }
                           });
                         });
 
-                        // check if chat already exists
-                        await ref.child('chats').get().then((snapshot) async {
-                          // fetch all chats
-                          dynamic _allChatsMap = snapshot.value;
-
-                          await _allChatsMap.forEach((key, value) {
-                            // check if users are involved in each chat
-                            if (key.contains(user['uid']) &&
-                                key.contains(recipientData['uid'])) {
-                              // users are involved
-
-                              // overwrite chatKey with existing chat key
-                              chatKey = key;
-                            }
-                          });
-                        });
-
-                        // upload image
-                        String imageUrl = await uploadImage(_image!);
-
-                        Map chatMap = {
-                          'image': imageUrl,
-                          'text': _textController.text,
-                          'sender': user['uid'],
-                          'sent_at': DateTime.now().toString(),
-                          'recipient': recipientData['uid'],
-                        };
-
-                        // upload message to chat
-                        await ref
-                            .child('chats')
-                            .child(chatKey)
-                            .set(chatMap)
-                            .then((value) {
+                        if (chatExists) {
                           // pop loading indicator
                           Navigator.pop(context);
 
-                          // navigate back to HomeScreen
-                          Navigator.pushNamed(context, '/home').then(
-                            (value) => setState(() {}),
-                          );
-
-                          // show successful dialog
+                          // show error dialog
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('Fatto!'),
-                                content: const Text(
-                                  'Messaggio inviato con successo!',
+                                title: const Text('errore!'),
+                                content: Text(
+                                  'tu e ${recipientData['username']} siete già amici',
                                 ),
                                 actions: <TextButton>[
                                   TextButton(
-                                    child: const Text('Ok'),
+                                    child: const Text('ok'),
                                     onPressed: () => Navigator.pop(context),
                                   ),
                                 ],
                               );
                             },
                           );
-                        });
+                        } else {
+                          // upload image
+                          String imageUrl = await uploadImage(_image!);
+
+                          Map chatMap = {
+                            'image': imageUrl,
+                            'text': _textController.text,
+                            'sender': user['uid'],
+                            'sent_at': DateTime.now().toString(),
+                            'recipient': recipientData['uid'],
+                          };
+
+                          // upload message to chat
+                          await ref
+                              .child('chats')
+                              .child(chatKey)
+                              .set(chatMap)
+                              .then((value) {
+                            // pop loading indicator
+                            Navigator.pop(context);
+
+                            // navigate back to HomeScreen
+                            Navigator.pushNamed(context, '/home').then(
+                              (value) => setState(() {}),
+                            );
+
+                            // show successful dialog
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Fatto!'),
+                                  content: const Text(
+                                    'Messaggio inviato con successo!',
+                                  ),
+                                  actions: <TextButton>[
+                                    TextButton(
+                                      child: const Text('Ok'),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          });
+                        }
                       }
                     }
                   },
