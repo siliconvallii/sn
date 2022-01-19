@@ -24,8 +24,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
 
-  final String _templateImageUrl =
-      'https://img.myloview.it/quadri/upload-vector-icon-cloud-storage-symbol-upload-to-cloud-icon-modern-simple-line-style-vector-illustration-for-web-site-or-mobile-app-700-176322192.jpg';
   File? _image;
 
   @override
