@@ -247,6 +247,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         controller: _textController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
+                          counterText: '',
                           hintText: 'scrivi una breve bio...',
                           hintStyle: GoogleFonts.alata(
                             color: Colors.grey,
@@ -254,6 +255,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           ),
                         ),
                         keyboardType: TextInputType.multiline,
+                        maxLength: 500,
                         maxLines: null,
                         style: GoogleFonts.alata(
                           color: Colors.white,
