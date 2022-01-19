@@ -26,6 +26,9 @@ class _NewChatScreenState extends State<NewChatScreen> {
 
   File? _image;
 
+  bool _isObsured = false;
+  bool _isEnabled = true;
+
   @override
   Widget build(BuildContext context) {
     double _marginSize = MediaQuery.of(context).size.width * 0.03;
@@ -109,8 +112,10 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                         fontSize: 17,
                                       ),
                                     ),
+                                    enabled: _isEnabled,
                                     keyboardType: TextInputType.text,
                                     maxLength: 50,
+                                    obscureText: _isObsured,
                                     style: GoogleFonts.alata(
                                       color: Colors.white,
                                       fontSize: 17,
@@ -151,6 +156,12 @@ class _NewChatScreenState extends State<NewChatScreen> {
                                     );
                                   } else {
                                     // random user was found
+
+                                    setState(() {
+                                      _isObsured = true;
+                                      _isEnabled = false;
+                                    });
+
                                     _recipientController.text =
                                         randomUser['username'];
                                   }
