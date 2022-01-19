@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           actions: [
             IconButton(
               icon: const Icon(Icons.person),
@@ -34,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ],
-          automaticallyImplyLeading: false,
           backgroundColor: const Color(0xff2E2E2E),
           centerTitle: true,
           elevation: 0,
